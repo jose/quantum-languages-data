@@ -4,6 +4,23 @@
 
 # --------------------------------------------------------------------- Wrappers
 
+
+# ------------------------------------------------------------------------------
+# Path to the repository
+# ------------------------------------------------------------------------------
+data_path <- "D:/OneDrive/GitHub/quantum-languages-data/data/"
+report_path <- "D:/OneDrive/GitHub/quantum-languages-thesis/thesis/figures/"
+# ------------------------------------------------------------------------------
+
+
+append_path_data <- function(file_path) {
+  return(paste(data_path, file_path, sep=""))
+}
+
+append_path_report <- function(file_path) {
+  return(paste(report_path, file_path, sep=""))
+}
+
 '%!in%' <- function(x,y)!('%in%'(x,y)) # Wrapper to 'not in'
 
 load_CSV <- function(csv_path) {

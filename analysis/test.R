@@ -1,7 +1,8 @@
 library(tidyverse)
 library(dplyr)
 
-dfSurvey <- read.csv(file = "survey.csv", header = TRUE, sep = ",")
+#dfSurvey <- read.csv(file = "survey.csv", header = TRUE, sep = ",")
+dfSurvey <- load_CSV(append_path_data('survey.csv'))
 
 tableAge <- table(dfSurvey$Have.you.ever.used.any.Quantum.Programming.Language.)
 

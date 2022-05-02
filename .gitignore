@@ -296,3 +296,4 @@ vignettes/*.pdf
 *.knit.md
 
 # EOF
+analysis/analysis.Rproj
