@@ -4,10 +4,10 @@ source('utils.R')
 library('ggplot2')
 
 # Import data file
-dfSurvey <- load_CSV(append_path_data('survey.csv'))
+dfSurvey <- load_CSV(append_path(data_path, 'survey.csv'))
 
 # Set output file to a PDF
-OUTPUT_FILE <- append_path_report('reportAge.pdf')
+OUTPUT_FILE <- append_path(report_path, 'reportAge.pdf')
 unlink(OUTPUT_FILE)
 pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 
