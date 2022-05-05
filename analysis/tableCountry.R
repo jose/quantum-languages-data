@@ -1,13 +1,32 @@
+# ------------------------------------------------------------------------------
+# This script print out a latex table with the number of participants per country.
+#
+# Usage:
+#   Rscript tableCountry.R
+#     <output tex file, e.g., tableCountry.tex>
+# ------------------------------------------------------------------------------
+
 source('utils.R')
 
-# Load external packages
-library('ggplot2')
+# ------------------------------------------------------------------------- Args
+
+args = commandArgs(trailingOnly=TRUE)
+if (length(args) != 1) {
+  stop('USAGE: Rscript tableCountry.R <output tex file, e.g., tableCountry.tex>')
+}
+
+# Args
+INPUT_FILE  <- '../data/survey.csv'
+OUTPUT_FILE <- args[1]
+
+# ------------------------------------------------------------------------- Main
 
 # Import data file
-dfSurvey <- load_CSV(append_path(data_path, 'survey.csv'))
+df <- load_CSV(INPUT_FILE)
 
-# Set output file to a PDF
-OUTPUT_FILE <- append_path(table_path, 'tableCountry.tex')
+# Filter out the ones that have not used any QP language, as those have not
+# completed the survey
+df <- df[df$'Have.you.ever.used.any.Quantum.Programming.Language.' == 'Yes', ]
 
 # Remove the output file if any
 unlink(OUTPUT_FILE)
@@ -19,11 +38,10 @@ cat('\\multicolumn{1}{c}{Country} & \\multicolumn{1}{c}{\\# Participants} \\\\ \
 cat('\\midrule \n', sep='')
 
 # Content
-country <- table(dfSurvey$Where.do.you.live...Country.)
-#df <- as.data.frame(country)
-
-cat("Brazil & 9 \\\\", "\n", sep="")
-cat("Portugal & 10 \\\\", "\n", sep="")
+for (country in sort(unique(df$'Where.do.you.live...Country.'))) {
+  count <- nrow(df[df$'Where.do.you.live...Country.' == country, ])
+  cat(country, ' & ', count, ' \\\\\n', sep='')
+}
 
 # Footer
 cat('\\bottomrule\n', sep='')
@@ -32,3 +50,4 @@ cat('\\end{tabular}\n', sep='')
 # Flush data
 sink()
 
+# EOF
