@@ -12,9 +12,9 @@ source('utils.R')
 # ------------------------------------------------------------------------- Args
 
 args = commandArgs(trailingOnly=TRUE)
-#if (length(args) != 1) {
-#  stop('USAGE: Rscript reportForums.R <output pdf file, e.g., reportQPLFuture.pdf>')
-#}
+if (length(args) != 1) {
+  stop('USAGE: Rscript reportForums.R <output pdf file, e.g., reportQPLFuture.pdf>')
+}
 
 # Args
 INPUT_FILE  <- '../data/survey.csv'
@@ -32,7 +32,7 @@ df <- load_CSV(INPUT_FILE)
 df <- df[df$'Have.you.ever.used.any.Quantum.Programming.Language.' == 'Yes', ]
 
 # Set output file to a PDF
-OUTPUT_FILE <- append_path(report_path, 'reportQPLFuture.pdf')
+#OUTPUT_FILE <- append_path(report_path, 'reportQPLFuture.pdf')
 unlink(OUTPUT_FILE)
 pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 
