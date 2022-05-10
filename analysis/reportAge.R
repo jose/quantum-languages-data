@@ -38,6 +38,8 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 # Plot report 
 plot_label("Age Report\nWhat is your age?")
 
+theme_set(theme_gray(base_size = 16))
+
 slices <- table(df$What.is.your.age.)
 lbls <- c('less than 18 years old', '18-24 years old', '25-34 years old', '35-44 years old', '45-54 years old', '55-64 years old', '65 years or older')
 pct <- round(slices/sum(slices)*100)
@@ -53,3 +55,4 @@ dev.off()
 embed_fonts_in_a_pdf(OUTPUT_FILE)
 
 # EOF
+

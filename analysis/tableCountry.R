@@ -29,6 +29,7 @@ df <- load_CSV(INPUT_FILE)
 df <- df[df$'Have.you.ever.used.any.Quantum.Programming.Language.' == 'Yes', ]
 
 # Remove the output file if any
+#OUTPUT_FILE <- append_path(table_path, 'tableCountry.tex')
 unlink(OUTPUT_FILE)
 sink(OUTPUT_FILE, append=FALSE, split=TRUE)
 
@@ -51,3 +52,4 @@ cat('\\end{tabular}\n', sep='')
 sink()
 
 # EOF
+

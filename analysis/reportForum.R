@@ -49,10 +49,11 @@ rownames(tab) <- c('#')
 tab <- as.table(tab)
 df <- as.data.frame(tab)
 
+theme_set(theme_gray(base_size = 16))
 ggplot(df, aes(x=Var2, y=Freq)) + 
   geom_bar(stat = "identity") + 
   labs(title="Which forums, e.g., to ask for help, search for examples, do you use? (if any)",
-       x="", y= "") +
+       x="", y= "Number of participants") +
   geom_text(aes(label = Freq), nudge_y= 3, color="black")
 
 # Close output file

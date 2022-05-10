@@ -47,13 +47,13 @@ colnames(tab) <- c('Books','Online Course','Search Sites','University', 'Work','
 rownames(tab) <- c('#')
 tab <- as.table(tab)
 df <- as.data.frame(tab)
-print(df)
 
+theme_set(theme_gray(base_size = 16))
 ggplot(df, aes(x=Var2, y=Freq)) + 
   geom_bar(stat = "identity") + 
   coord_flip() +
   labs(title="Where did you learn Quantum Physics?",
-       x="", y= "") +
+       x="", y= "Number of participants") +
   geom_text(aes(label = Freq), nudge_y= 2, color="Black")
 
 # Close output file
