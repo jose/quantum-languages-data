@@ -36,13 +36,15 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 # Plot report 
 plot_label("Forum Report\nWhere did you learn Quantum Physics?")
 
-countBooks <- nrow(df[df$'Where.did.you.learn.Quantum.Physics.' %in% 'Books', ]) 
-countOnlineCourse <- nrow(df[df$'Where.did.you.learn.Quantum.Physics.' %in% 'Online Course', ]) 
-countSearchSites <- nrow(df[df$'Where.did.you.learn.Quantum.Physics.' %in% 'Search Sites', ]) 
-countUniversity <- nrow(df[df$'Where.did.you.learn.Quantum.Physics.' %in%  'University', ]) 
-countWork <- nrow(df[strsplit(df$'Where.did.you.learn.Quantum.Physics.', ";") %in% 'Work', ]) 
+dfQS <- df$'Where.did.you.learn.Quantum.Physics.'
 
-tab <- matrix(c(countBooks, countOnlineCourse, countSearchSites, countUniversity, countWork, 1), ncol=6, byrow=TRUE)
+countBooks <- nrow(df[grep('Books', dfQS), ])
+countOnlineCourse <- nrow(df[grep('Online Course', dfQS), ])
+countSearchSites <- nrow(df[grep('Search Sites', dfQS), ])
+countUniversity <- nrow(df[grep('University', dfQS), ])
+countWork <- nrow(df[grep('Work', dfQS), ])
+
+tab <- matrix(c(countBooks, countOnlineCourse, countSearchSites, countUniversity, countWork, 12), ncol=6, byrow=TRUE)
 colnames(tab) <- c('Books','Online Course','Search Sites','University', 'Work','Others')
 rownames(tab) <- c('#')
 tab <- as.table(tab)

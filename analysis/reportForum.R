@@ -38,12 +38,15 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 # Plot report 
 plot_label("Forum Report\nWhich forums, e.g., to ask for help, search for examples, do you use? (if any)")
 
-countDevtalk <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Devtalk', ]) 
-countQOSF <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Quantum Open Source Foundation', ]) 
-countSlack <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Slack', ]) 
-countStackOverflow <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in%  'StackOverflow', ]) 
+dfForum <-df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.'
 
-tab <- matrix(c(countDevtalk, countQOSF, countSlack, countStackOverflow, 10), ncol=5, byrow=TRUE)
+countDevtalk <- nrow(df[grep('Devtalk', dfForum), ])
+countQOSF <- nrow(df[grep('Quantum Open Source Foundation', dfForum), ]) 
+countSlack <- nrow(df[grep('Slack', dfForum), ]) 
+countStackOverflow <- nrow(df[grep('StackOverflow', dfForum), ]) 
+#total <- nrow(dfForum) 
+
+tab <- matrix(c(countDevtalk, countQOSF, countSlack, countStackOverflow, 27), ncol=5, byrow=TRUE)
 colnames(tab) <- c('Devtalk','Quantum Open Source Foundation','Slack','StackOverflow','Others')
 rownames(tab) <- c('#')
 tab <- as.table(tab)

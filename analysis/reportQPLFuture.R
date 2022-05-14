@@ -39,14 +39,16 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 # Plot report 
 plot_label("QPL/Framework most like to be used in the future Report\nWhich Quantum Programming Languages / frameworks would you like to work or try in the near future?")
 
-countBlackbird <- nrow(df[df$'Which.Quantum.Programming.Languages...frameworks.would.you.like.to.work.or.try.in.the.near.future..' %in% 'Blackbird', ]) 
-countBrakedSDK <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Braket SDK', ])
-countCirq <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Cirq', ]) 
-countCove <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'Cove', ]) 
-countcQASM <- nrow(df[df$'Which.forums..e.g...to.ask.for.help..search.for.examples..do.you.use...if.any.' %in% 'cQASM', ]) 
+dfQplFuture <- df$'Which.Quantum.Programming.Languages...frameworks.would.you.like.to.work.or.try.in.the.near.future..'
 
-tab <- matrix(c(countBlackbird, countBrakedSDK, countCirq, countCove, countcQASM), ncol=5, byrow=TRUE)
-colnames(tab) <- c('Blackbird','Braket SDK','Cirq','Cove','cQASM')
+countBlackbird <- nrow(df[grep('Blackbird', dfQplFuture), ])  
+countQiskit <- nrow(df[grep('Qiskit', dfQplFuture), ]) 
+countCirq <- nrow(df[grep('Cirq', dfQplFuture), ]) 
+countCove <- nrow(df[grep('Cove', dfQplFuture), ]) 
+countcQASM <- nrow(df[grep('cQASM', dfQplFuture), ]) 
+
+tab <- matrix(c(countBlackbird, countQiskit, countCirq, countCove, countcQASM), ncol=5, byrow=TRUE)
+colnames(tab) <- c('Blackbird','Qiskit','Cirq','Cove','cQASM')
 rownames(tab) <- c('#')
 tab <- as.table(tab)
 df <- as.data.frame(tab)

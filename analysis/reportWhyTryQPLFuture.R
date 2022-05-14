@@ -39,13 +39,15 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=9)
 # Plot report 
 plot_label("Why the participants wants to try QPLs/Framework in the near future Report\nWhy would you like to work or try those languages / frameworks?")
 
-countHeardAbout <- nrow(df[df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.' %in% 'Heard about the language', ]) 
-countPartOfCourse <- nrow(df[df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.' %in% 'Is part of a course about the language', ])
-countReadArticle <- nrow(df[df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.' %in% 'Read an article about the language', ]) 
-countWidelyUsed <- nrow(df[df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.' %in% 'Widely used', ]) 
-countOtherFeatures <- nrow(df[df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.' %in% 'Other features', ]) 
+dfQplTryFuture <- df$'Why.would.you.like.to.work.or.try.those.languages...frameworks.'
 
-tab <- matrix(c(countHeardAbout, countPartOfCourse, countReadArticle, countWidelyUsed, countOtherFeatures, 10), ncol=6, byrow=TRUE)
+countHeardAbout <- nrow(df[grep('Heard about the languag', dfQplTryFuture), ])
+countPartOfCourse <- nrow(df[grep('Is part of a course about the language', dfQplTryFuture), ])
+countReadArticle <- nrow(df[grep('Read an article about the language', dfQplTryFuture), ])
+countWidelyUsed <- nrow(df[grep('Widely used', dfQplTryFuture), ])
+countOtherFeatures <- nrow(df[grep('Other features', dfQplTryFuture), ])
+
+tab <- matrix(c(countHeardAbout, countPartOfCourse, countReadArticle, countWidelyUsed, countOtherFeatures, 29), ncol=6, byrow=TRUE)
 colnames(tab) <- c('Heard about \nthe language','Is part of a course \nabout the language','Read an article \nabout the language','Widely used','Other features', 'Other')
 rownames(tab) <- c('#')
 tab <- as.table(tab)
@@ -56,7 +58,7 @@ ggplot(df, aes(x=Var2, y=Freq)) +
   geom_bar(stat = "identity") + 
   coord_flip() +
   labs(title="", x="", y= "Number of participants") +
-  geom_text(aes(label = Freq), nudge_y= 1, color="Black")
+  geom_text(aes(label = Freq), nudge_y= 3, color="Black")
 
 # Close output file
 dev.off()
