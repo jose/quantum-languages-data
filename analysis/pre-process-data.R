@@ -29,6 +29,7 @@ cat('Pre-processing data... ', date(), '\n', sep='')
 df <- pre_process_data(df)
 
 cat('Data has been loaded and pre-processed. Starting compressing it... ', date(), '\n', sep='')
+unlink(OUTPUT_FILE)
 write.table(df, file=gzfile(OUTPUT_FILE))
 stopifnot(file.exists(OUTPUT_FILE) == TRUE)
 
