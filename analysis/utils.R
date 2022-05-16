@@ -5,6 +5,10 @@
 # Load external packages
 library('reshape2')
 
+# Environment variables
+RAW_DATA_FILE         <- '../data/survey.csv'
+PRE_PROCESS_DATA_FILE <- '../data/survey-post-process.csv.gz'
+
 # --------------------------------------------------------------------- Wrappers
 
 '%!in%' <- function(x,y)!('%in%'(x,y)) # Wrapper to 'not in'
@@ -15,6 +19,16 @@ load_CSV <- function(csv_path) {
 
 load_TABLE <- function(zip_path) {
   return(read.table(gzfile(zip_path), header=TRUE, stringsAsFactors=FALSE))
+}
+
+load_survey_data <- function() {
+  if (file.exists(PRE_PROCESS_DATA_FILE) == FALSE) {
+    df <- load_CSV(RAW_DATA_FILE)
+    df <- pre_process_data(df)
+    write.table(df, file=gzfile(PRE_PROCESS_DATA_FILE))
+  }
+  stopifnot(file.exists(PRE_PROCESS_DATA_FILE) == TRUE)
+  return(read.table(gzfile(PRE_PROCESS_DATA_FILE), header=TRUE, stringsAsFactors=FALSE))
 }
 
 replace_string <- function(string, find, replace) {
@@ -45,7 +59,7 @@ plot_label <- function(text) {
 #
 pre_process_data <- function(df) {
   #
-  # 1. Rename all columns
+  # Rename all columns
   #
   names(df)[names(df) == 'Timestamp'] <- 'timestamp'
   names(df)[names(df) == 'Have.you.ever.used.any.Quantum.Programming.Language.'] <- 'used_qpl'
@@ -129,7 +143,7 @@ pre_process_data <- function(df) {
   names(df)[names(df) == 'In.your.opinion..do.you.think.that.quantum.developers.would.need.yet.another.Quantum.Programming.Languages.in.the.near.future..Why.'] <- 'why_need_another_qpl'
 
   #
-  # 2. Make multiple value columns into a single column with multiple values (one per row)
+  # Convert dataframe from wide to long (column level)
   #
 
   # rate_primary_qpl_*
