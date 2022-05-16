@@ -17,7 +17,7 @@ table_path <- "D:/OneDrive/GitHub/quantum-languages-thesis/thesis/tables/"
 # ------------------------------------------------------------------------------
 
 append_path <- function(directory_path, file_path) {
-  return(paste(directory_path, file_path, sep=""))
+  return(paste(directory_path, file_path, sep=''))
 }
 
 '%!in%' <- function(x,y)!('%in%'(x,y)) # Wrapper to 'not in'
