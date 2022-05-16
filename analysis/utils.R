@@ -7,19 +7,6 @@ library('reshape2')
 
 # --------------------------------------------------------------------- Wrappers
 
-
-# ------------------------------------------------------------------------------
-# Path to the repository
-# ------------------------------------------------------------------------------
-data_path <- "D:/OneDrive/GitHub/quantum-languages-data/data/"
-report_path <- "D:/OneDrive/GitHub/quantum-languages-thesis/thesis/figures/"
-table_path <- "D:/OneDrive/GitHub/quantum-languages-thesis/thesis/tables/"
-# ------------------------------------------------------------------------------
-
-append_path <- function(directory_path, file_path) {
-  return(paste(directory_path, file_path, sep=''))
-}
-
 '%!in%' <- function(x,y)!('%in%'(x,y)) # Wrapper to 'not in'
 
 load_CSV <- function(csv_path) {
