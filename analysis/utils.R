@@ -6,8 +6,7 @@
 library('reshape2')
 
 # Environment variables
-RAW_DATA_FILE         <- '../data/survey.csv'
-PRE_PROCESS_DATA_FILE <- '../data/survey-post-process.csv.gz'
+RAW_DATA_FILE <- '../data/survey.csv'
 
 # --------------------------------------------------------------------- Wrappers
 
@@ -22,13 +21,9 @@ load_TABLE <- function(zip_path) {
 }
 
 load_survey_data <- function() {
-  if (file.exists(PRE_PROCESS_DATA_FILE) == FALSE) {
-    df <- load_CSV(RAW_DATA_FILE)
-    df <- pre_process_data(df)
-    write.table(df, file=gzfile(PRE_PROCESS_DATA_FILE))
-  }
-  stopifnot(file.exists(PRE_PROCESS_DATA_FILE) == TRUE)
-  return(read.table(gzfile(PRE_PROCESS_DATA_FILE), header=TRUE, stringsAsFactors=FALSE))
+  df <- load_CSV(RAW_DATA_FILE)
+  df <- pre_process_data(df)
+  return(df)
 }
 
 replace_string <- function(string, find, replace) {
