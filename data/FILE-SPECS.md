@@ -193,7 +193,7 @@
 - `In terms of ease, rate your primary Quantum Programming Language. [Several forums]`
 - `In terms of ease, rate your primary Quantum Programming Language. [Support (e.g., github issues)]`
 - `In terms of ease, rate your primary Quantum Programming Language. [Easy to code]`:  rate the main characteristics of the participants favourite QPL
-  * factor, i.e., Features / functionalities of the language; Documentation avaliable; Code examples; Several forums; Support (e.g., github issues); Easy to code; (Multiple Choice Grid)
+  * factor, i.e., Features / functionalities of the language; Documentation available; Code examples; Several forums; Support (e.g., github issues); Easy to code; (Multiple Choice Grid)
   * factor, i.e., 1; 2; 3; 4; 5;
   * acronym: rate_primary_qpl
 
