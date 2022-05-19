@@ -189,6 +189,8 @@ remove(agg)
 plot_label('Where did you learn Quantum Physics?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_quantum_physics, sep=';'))
+# Replace open-answers with 'Other'
+agg$'learned_quantum_physics'[agg$'learned_quantum_physics' %!in% c('Books', 'Online Course', 'Search Sites', 'University', 'Work')] <- 'Other'
 agg <- aggregate(x=. ~ timestamp + learned_quantum_physics, data=agg, FUN=length)
 make_bar_plot(agg, x='learned_quantum_physics')
 make_pie_plot(agg, fill='learned_quantum_physics')
