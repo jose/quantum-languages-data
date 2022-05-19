@@ -7,9 +7,6 @@
 # fix-data-headers.sh
 #   [--data_file <path, survey.csv (by default)>]
 #   [help]
-#
-# Requirements:
-#   Execution of ../../tools/get-tools.sh script.
 # ------------------------------------------------------------------------------
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null 2>&1 && pwd)"
