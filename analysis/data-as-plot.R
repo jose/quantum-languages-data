@@ -29,29 +29,27 @@ df <- load_survey_data()
 
 # Set output file to a PDF
 unlink(OUTPUT_FILE)
-pdf(file=OUTPUT_FILE, family='Helvetica', width=12, height=12)
+pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
 # Add a cover page to the output file
 plot_label('Data as pieplots and barplots')
-
-# Set the theme and size
-theme_set(theme_gray(base_size = 16))
 
 make_bar_plot <- function(df, x) {
   # Basic barplot
   p <- ggplot(df, aes_string(x=x)) + geom_bar(width=0.90)
+  
   # Change x axis label
   p <- p + scale_x_discrete(name='')
   # Change y axis label
-  p <- p + scale_y_continuous(name='# Number of participants')
+  p <- p + scale_y_continuous(name='# Number of participants', labels = scales::percent_format(scale = 1))
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='none',
-    axis.text.x=element_text(size=13,  hjust=0.5, vjust=0.5),
-    axis.text.y=element_text(size=13,  hjust=1.0, vjust=0.0),
-    axis.title.x=element_text(size=15, hjust=0.5, vjust=0.0),
-    axis.title.y=element_text(size=15, hjust=0.5, vjust=0.5)
+    axis.text.x=element_text(size=16,  hjust=0.5, vjust=0.5),
+    axis.text.y=element_text(size=16,  hjust=1.0, vjust=0.0),
+    axis.title.x=element_text(size=16, hjust=0.5, vjust=0.0),
+    axis.title.y=element_text(size=16, hjust=0.5, vjust=0.5)
   )
   # Add labels over bars
-  p <- p + stat_count(geom='text', colour='black', size=5, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
+  p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
@@ -61,12 +59,15 @@ make_bar_plot <- function(df, x) {
 make_pie_plot <- function(df, fill) {
   # Create a barplot to visualize the data
   p <- ggplot(df, aes_string(x=factor(1), fill=fill)) + geom_bar(width=1)
+  
   # Create pie-chart plot
   p <- p + coord_polar('y', start=0)
   # Add text to each slice
-  p <- p + stat_count(geom='text', colour='black', size=5, aes(label=..count..), position=position_stack(vjust=0.5))
+  lbl <- 
+  p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), "%", sep="")), position=position_stack(vjust=0.5))
   # Create a customized blank theme
   p <- p + theme(legend.position='top',
+    legend.text = element_text(size=16),
     legend.margin=margin(t=0, r=0, b=0, l=0),
     legend.box.margin=margin(t=0, r=0, b=-50, l=0),
     axis.line = element_blank(),
@@ -155,8 +156,8 @@ agg <- as.data.frame(df %>% separate_rows(learned_code, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_code'[agg$'learned_code' %!in% c('Books / Physical media', 'Coding Bootcamp', 'Colleague', 'Friend or family member', 'Online Courses or Certification', 'Online Forum', 'Other online resources (videos, blogs, etc)', 'School')] <- 'Other'
 agg <- aggregate(x=. ~ timestamp + learned_code, data=agg, FUN=length)
-#make_bar_plot(agg, x='learned_code')
-make_pie_plot(agg, fill='learned_code')
+make_bar_plot(agg, x='learned_code')
+#make_pie_plot(agg, fill='learned_code')
 remove(agg)
 
 #
