@@ -50,8 +50,8 @@ done
 
 # ------------------------------------------------------------------------- Main
 
-# Fix header
-head -n1 "$data_file" | \
+# Fix characters
+cat "$data_file" | \
   sed 's|𝐐𝐮𝐚𝐧𝐭𝐮𝐦 𝐏𝐫𝐨𝐠𝐫𝐚𝐦𝐦𝐢𝐧𝐠 𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞𝐬|Quantum Programming Languages|g' | \
   sed 's|𝐩𝐫𝐨𝐟𝐞𝐬𝐬𝐢𝐨𝐧𝐚𝐥𝐥𝐲|professionally|g' | \
   sed 's|𝐩𝐫𝐢𝐦𝐚𝐫𝐲|primary|g' | \
@@ -60,9 +60,6 @@ head -n1 "$data_file" | \
   sed 's/𝐿𝐼𝑄𝑈𝑖|⟩/LIQUi|>/g' | \
   sed 's/𝑄|𝑆𝐼⟩/Q|SI>/g' | \
   sed 's|𝜆𝑞 (Lambda Calculi)|Lambda Calculi|g' > "$data_file.tmp"
-
-# Get content
-tail -n +2 "$data_file" >> "$data_file.tmp"
 
 # Replace input
 mv "$data_file.tmp" "$data_file"
