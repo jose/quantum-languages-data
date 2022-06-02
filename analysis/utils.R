@@ -199,7 +199,7 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_lanq') {
       return('LanQ')
     } else if (used_qpl == 'used_qpls_liqui') {
-      return('𝐿𝐼𝑄𝑈𝑖|⟩')
+      return('LIQUi|>')
     } else if (used_qpl == 'used_qpls_ndqfp') {
       return('NDQFP')
     } else if (used_qpl == 'used_qpls_ndqjava') {
@@ -245,7 +245,7 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_q') {
       return('Q#')
     } else if (used_qpl == 'used_qpls_qsi') {
-      return('𝑄|𝑆𝐼⟩')
+      return('Q|SI>')
     } else if (used_qpl == 'used_qpls_sabry') {
       return('Sabry Language')
     } else if (used_qpl == 'used_qpls_scaffold') {
@@ -255,7 +255,7 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_strawberry') {
       return('Strawberry Fields')
     } else if (used_qpl == 'used_qpls_lambda_calculi') {
-      return('𝜆𝑞 (Lambda Calculi)')
+      return('Lambda Calculi')
     } else if (used_qpl == 'used_qpls_other') {
       return('Other')
     }
