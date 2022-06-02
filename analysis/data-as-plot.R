@@ -312,7 +312,7 @@ remove(agg)
 plot_label('In terms of ease, rate your primary Quantum Programming Language.')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl_name, sep=';'))
-agg <- aggregate(x=. ~ timestamp + rate_primary_qpl_name, data=agg, FUN=length)
+agg <- aggregate(x=. ~ timestamp + rate_primary_qpl_name + rate_primary_qpl_value, data=agg, FUN=length)
 make_bar_plot(agg, x='rate_primary_qpl_name')
 #make_pie_plot(agg, fill='rate_primary_qpl_name')
 remove(agg)
