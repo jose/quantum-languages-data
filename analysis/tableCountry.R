@@ -16,20 +16,19 @@ if (length(args) != 1) {
 }
 
 # Args
-INPUT_FILE  <- '../data/survey.csv'
 OUTPUT_FILE <- args[1]
 
 # ------------------------------------------------------------------------- Main
 
-# Import data file
-df <- load_CSV(INPUT_FILE)
-
+# Load data
+df <- load_survey_data()
 # Filter out the ones that have not used any QP language, as those have not
 # completed the survey
-df <- df[df$'Have.you.ever.used.any.Quantum.Programming.Language.' == 'Yes', ]
+df <- df[df$'used_qpl' == 'Yes', ]
+# As the dataframe df is organized in long format we first need to group data
+df <- aggregate(x=. ~ timestamp + country, data=df, FUN=length)
 
 # Remove the output file if any
-#OUTPUT_FILE <- append_path(table_path, 'tableCountry.tex')
 unlink(OUTPUT_FILE)
 sink(OUTPUT_FILE, append=FALSE, split=TRUE)
 
@@ -39,8 +38,8 @@ cat('\\multicolumn{1}{c}{Country} & \\multicolumn{1}{c}{\\# Participants} \\\\ \
 cat('\\midrule \n', sep='')
 
 # Content
-for (country in sort(unique(df$'Where.do.you.live...Country.'))) {
-  count <- nrow(df[df$'Where.do.you.live...Country.' == country, ])
+for (country in sort(unique(df$'country'))) {
+  count <- nrow(df[df$'country' == country, ])
   cat(country, ' & ', count, ' \\\\\n', sep='')
 }
 
