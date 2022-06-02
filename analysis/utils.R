@@ -176,7 +176,7 @@ pre_process_data <- function(df) {
   df <- melt(df, id.vars=all_colnames_but_used_qpls, measure.vars=used_qpls_colnames)
 
   names(df)[names(df) == 'variable'] <- 'used_qpls'
-  df <- df[ , which(colnames(df) %!in% c('value')) ]
+  names(df)[names(df) == 'value']    <- 'used_qpls_value'
   pretty_used_qpl <- function(used_qpl) {
     if (used_qpl == 'used_qpls_blackbird') {
       return('Blackbird')
