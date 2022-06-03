@@ -1,0 +1,252 @@
+"timestamp","used_qpl","why_too_many_qpl",why_too_many_qpl_resp,"why_need_another_qpl",why_need_another_qpl_resp
+"2022/03/31 10:58:33 AM GMT-3","Yes","NA",NA,"NA ",NA
+"2022/03/31 11:00:22 AM GMT-3","Yes",,NA,,NA
+"2022/03/31 12:22:48 PM GMT-3","Yes","This is a silly question.",NA,"This is also a silly question. Define ""we"" and define ""need""? Arguably, almost 100% of the human population does not currently need any quantum programming languages. There are no current real-world applications of such languages. We are developing them for the (distant) future, not because of some immediate ""need"".",NA
+"2022/04/01 3:10:16 AM GMT-3","Yes",,NA,"The problem is more about standard libraries of generic, optimized and verified subroutines and idioms  rather than programming languages.",No
+"2022/04/01 12:56:42 PM GMT-3","Yes","I think there is a good number of languages.",No,"I don't think we really need another language, unless it adds something significant to the field.",No
+"2022/04/02 10:00:06 PM GMT-3","Yes","Too many, not standardized, ((but not so easy)",Yes,"Perhaps, a better standardized ",Yes
+"2022/04/03 1:00:03 PM GMT-3","No",,,,
+"2022/04/07 3:11:25 PM GMT-3","Yes","Too many. There are lots of overlapping features. It would be nice to have one standardized language that can run on all machines.",Yes,"No -- as mentioned previously many languages overlap and a standardized language for quantum computation could accelerate development.",No
+"2022/04/07 3:50:37 PM GMT-3","Yes","Too many (although it's good for the community and progress, but can be annoying when one has to pick)",Yes,"No need. It would suffice if the existing ones get properly updated/maintained and extended. Could then be renamed and count as a ""new"" one ;-)",No
+"2022/04/07 4:08:04 PM GMT-3","No",,,,
+"2022/04/07 4:17:15 PM GMT-3","Yes","Not enough knowledge, sorry!",NA,"Maybe. ",Yes
+"2022/04/07 5:05:25 PM GMT-3","Yes",,NA,,NA
+"2022/04/07 5:20:20 PM GMT-3","Yes","Too few. We need more ideas for how to make high level quantum programming easier.",No,,NA
+"2022/04/07 5:35:59 PM GMT-3","Yes",,NA,,NA
+"2022/04/07 6:30:53 PM GMT-3","Yes","Too many ",Yes,"Yes. Higher level programming. Right now, everything is low level with very little optimization for compilation",Yes
+"2022/04/07 7:39:40 PM GMT-3","Yes",,NA,,NA
+"2022/04/07 8:09:40 PM GMT-3","Yes","There are too many.",Yes,"Yes. According to advancement, I can feel that, it would be needed.",Yes
+"2022/04/08 5:02:23 AM GMT-3","Yes","It is not a matter of quantity as long as they cover the needs of a developer. But a more compact framework would be nice",NA,,NA
+"2022/04/08 5:14:14 AM GMT-3","Yes","Pardon?",NA,"Don’t know",NA
+"2022/04/08 6:27:38 AM GMT-3","Yes","just enough ",No,"it will come anyway ",Yes
+"2022/04/08 5:14:53 PM GMT-3","Yes","no opinion",NA," hopefully qiskit or another language will just update",No
+"2022/04/08 6:31:27 PM GMT-3","Yes","They're too many, quantum scientist should be very good to few quantum programming language. ",Yes,"No, and if need for that they should be on undescovered problem on quantum algorithm in which the present quantum programming language couldn't handle. ",No
+"2022/04/08 6:59:52 PM GMT-3","No",,,,
+"2022/04/09 3:27:17 AM GMT-3","Yes","there are too many Quantum Programming Languages, as the field of quantum computing is emerging, there are still many initiatives that consider that they can do things better, but it is always better to stay with the most mature languages",Yes,"No, it is better to learn the current languages and, if necessary, contribute to their improvement",No
+"2022/04/10 12:31:51 PM GMT-3","Yes","Too many, but this probably cannot be helped. Ideally it'd be better to have fewer, better designed languages/frameworks with more people working on each.",Yes,,NA
+"2022/04/11 6:43:45 AM GMT-3","Yes",,NA,,NA
+"2022/04/11 10:28:25 AM GMT-3","Yes","to many. they are not allowing people to properly develop and improve the exiting ones.",Yes,"yes. Quantum is not like classical. all the paradigm of thinking is different from classical.",Yes
+"2022/04/11 10:31:40 AM GMT-3","Yes","Too many, but most are bad.",Yes,"Yes, because most existing languages are bad.",Yes
+"2022/04/11 11:13:38 AM GMT-3","Yes","As for classical languages, there will be more than the used and usable.I guess that there is a competition between bigs to impose their standard.",No,"Yes, they are still not mature. Moreover, also the hardware is quickly changing.",Yes
+"2022/04/11 11:50:44 AM GMT-3","Yes","Too many. Because quantum programming is still in the early stages of development, there are many different proposals for languages. Many of these languages are ""research"" languages that do not have great community support (e.g., Quipper and Silq).",Yes,"I think that there are still useful features to add to quantum languages, which may lead to new languages. Hopefully these new ideas can be incorporated into industry-supported high-level languages like Microsoft's Q#.",Yes
+"2022/04/11 11:59:59 AM GMT-3","Yes","There are too many, but it's normal given that the field is rather new. i expect few of them to dominate.",Yes,,NA
+"2022/04/11 12:31:02 PM GMT-3","Yes","too many",Yes,"No",No
+"2022/04/11 2:10:40 PM GMT-3","Yes","We have strong candidates but not a unified strong aproach",No,"If it brings new features. is faster and easy to learn, why not?",Yes
+"2022/04/11 4:21:28 PM GMT-3","No",,,,
+"2022/04/11 11:10:53 PM GMT-3","Yes","Too many but infancy",Yes,"No, the popular languages/SDKs like Qiskit, Q#, Cirq is enough",No
+"2022/04/12 5:48:09 AM GMT-3","Yes","too many, although it is normal in my opinion. In the current state of the field,  after the big bang approach, only a reduced set of programming language will be used in large-scale.",Yes,"Difficult to say, right now, programming languages are highly dependent on technology.",NA
+"2022/04/13 7:42:39 AM GMT-3","Yes","Too many already, and sometimes missing some specifications for photonic devices, for example (e.g., beamsplitters, polarizers, continuous-variables, etc.).",Yes,"Maybe, if it covers some missing aspects that others do not cover.",Yes
+"2022/04/13 9:17:02 AM GMT-3","Yes","Too many. As a new paradigm there are not standards (neither de facto standards) so it is important to settle on few important and capable languages. ",Yes,"It could if it ease the developer's tasks",Yes
+"2022/04/19 4:35:27 PM GMT-3","Yes",,NA,,NA
+"2022/04/20 10:08:19 AM GMT-3","Yes","To few high level programming languages that focus on the intent of the programmer. ",No,"New classes of algorithms might require new programming languages. ",Yes
+"2022/04/21 5:39:13 AM GMT-3","Yes","About right. It is an emerging field.",No,"Yes. We need a language offering other sorts of abstractions (higher-level abstractions).",Yes
+"2022/04/21 6:18:32 AM GMT-3","Yes","As a qiskit guy only, i cannot say whether we have too many or too few Quantum Programming Languages right now.",NA,"It depends on how much is quantum going to scale. That will say whether new quantum frameworks will be needed or not as the current ones may or not meet developers needs.",NA
+"2022/04/21 7:32:08 AM GMT-3","Yes",,NA,,NA
+"2022/04/21 8:17:41 AM GMT-3","No",,,,
+"2022/04/21 8:29:00 AM GMT-3","Yes","there are many, but it's not a bad thing as we haven't found any quantum programming standards yet",Yes,"no, i believe we already have a good base with the languages ​​Q# and Ket",No
+"2022/04/21 8:35:39 AM GMT-3","Yes","Yes, This is because of lack in expertise",Yes,"Yes, To support cryptography and post-quantum cryptography concepts. ",Yes
+"2022/04/21 8:50:41 AM GMT-3","Yes",,NA,,NA
+"2022/04/21 9:14:30 AM GMT-3","Yes","Yes",Yes,,NA
+"2022/04/21 10:34:25 AM GMT-3","Yes","It feels like there is a need for more languages at the moment as different languages explore and specialize in different things. This would give an oportunity for developers to understand what is lacking and prioritize its development.",No,"Maybe in the near future it would be possible to create one (or some) that assimilates all the good features of previous languages. Or maybe development efforts could be more focused in specific promising languages.",Yes
+"2022/04/21 3:10:58 PM GMT-3","Yes","Too many",Yes,"Not sure; Classiq and some of the higher level languages are interesting, but possibly too soon.",NA
+"2022/04/21 9:18:14 PM GMT-3","Yes","Too many. Not many of them stand out from others",Yes,"No. I think that most quantum programs are developed with a single framework in mind, so the language is often chosen alongside the quantum computing method or company rather than chosen for its features.",No
+"2022/04/21 11:50:08 PM GMT-3","No",,,,
+"2022/04/22 12:50:51 AM GMT-3","Yes","No, in incipient stage, we should try many routes",No,"Maybe, the languages are not easy enough to use at present, most of them are too academic",Yes
+"2022/04/22 2:45:44 AM GMT-3","Yes",,NA,,NA
+"2022/04/22 7:30:53 AM GMT-3","Yes",,NA,,NA
+"2022/04/22 8:54:41 AM GMT-3","Yes","Yes, too many ",Yes,"No",No
+"2022/04/22 11:34:51 AM GMT-3","No",,,,
+"2022/04/23 3:37:52 PM GMT-3","Yes","Yes, because it is a new blooming field now.",Yes,"No",No
+"2022/04/25 4:39:03 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 6:42:44 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 6:46:12 AM GMT-3","Yes","Way too many. ",Yes,"No, too cluttered.",No
+"2022/04/26 6:48:18 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 6:49:15 AM GMT-3","Yes","too many standalone programs (not integrated with major software tools)",Yes,"No, existing languages should provide integrations",No
+"2022/04/26 6:49:54 AM GMT-3","Yes","Too many",Yes,"No",No
+"2022/04/26 6:51:23 AM GMT-3","No",,,,
+"2022/04/26 6:53:01 AM GMT-3","No",,,,
+"2022/04/26 6:53:31 AM GMT-3","Yes","Just the right amount. openqasm came to rescue qasm from closed source just like vim did to vi.",No,"Yes. Because some of the current ones are built poorly in a non-agile way.",Yes
+"2022/04/26 6:54:24 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 6:56:01 AM GMT-3","Yes","Too many",Yes,"Maybe one with unified features would be great",Yes
+"2022/04/26 6:58:49 AM GMT-3","Yes","too many, because people want to ""own"" the ecosystem, and organizations don't want to collaborate ",Yes,"No. There is *a lot* available, and building these ecosystems precisely, usefully, comprehensively, and correctly is a decade+ affair.",No
+"2022/04/26 7:00:03 AM GMT-3","No",,,,
+"2022/04/26 7:00:05 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 7:01:56 AM GMT-3","Yes","too many",Yes,"yes not sophysticated and follow all of physical environment",Yes
+"2022/04/26 7:04:01 AM GMT-3","Yes","Too few, there are many places where there is a need for new languages, which work more directly with math and theorem provers, have visualizer libraries, etc.",No,"Yes, theorem provers, visualizers, QML and QRL frameworks, Q-GAN.",Yes
+"2022/04/26 7:17:10 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 7:18:33 AM GMT-3","Yes","too many. i think having some kind of industry standard will make ot easier for code to be used by everyone, without having to transpile between languages",Yes,"perhaps yes. quantum information science is still a very new field, and there may be better representations or models developed in the future. if they are more intuitive/easier to use, a new language should be developed using the new concept",Yes
+"2022/04/26 7:21:32 AM GMT-3","Yes","Too few, because there should be as many as can Quantum Programming Languages to cover all possible approaches",No,"There definitionally should be something really lighweight, because most powerful Quantum Programming Languages (i.e. Qiskit or Q#) nowadays have too big requirements to developer’s hardware for comfortable development",Yes
+"2022/04/26 7:32:38 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 7:34:15 AM GMT-3","Yes","Too many; never heard 3/4 of the list you provided in the previous question",Yes,"I think Quantum devs needs an higher level language for quantum programming",Yes
+"2022/04/26 7:36:05 AM GMT-3","Yes","Too many, but it is something necessary until we find which features are required in a quantum programming language",Yes,"Yes, for sure. We will need higher level languages and it will be a transition similar to what was classically done, from circuit programming, then assembly language, then higher level languages and finally, object oriented languages.",Yes
+"2022/04/26 7:36:25 AM GMT-3","Yes","too many. market capture driven by companies",Yes,"maybe, the field will evolve",Yes
+"2022/04/26 7:36:34 AM GMT-3","No",,,,
+"2022/04/26 7:42:01 AM GMT-3","Yes",,NA,"Yes. Each framework has its own paradigm. Knowing a new paradigm gives developers chance to come up with new idea or more efficient way to solve his problem.",Yes
+"2022/04/26 7:42:19 AM GMT-3","Yes","This is actually very surprised for me that we have so many languages",Yes,"Probably yes, every single day a new programming language emerges to help people get their works done, which in my opinion can be applied to quantum programming languages.",Yes
+"2022/04/26 7:43:07 AM GMT-3","Yes","even classical prog. lang. is too many. each tuned for a specific application.",Yes,"a 'truely' quantum HLL would be nice.",Yes
+"2022/04/26 7:48:26 AM GMT-3","Yes","n/a",NA,"no",No
+"2022/04/26 7:54:55 AM GMT-3","Yes","I think too many but that is a nature of early programming languages.",Yes,"Yes, and I will work on it when I have time. That is because conventional representation of quantum computing is not efficient, and because current framework architecture is too aligned to ""physics"" perspective of quantum computation.",Yes
+"2022/04/26 7:58:37 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 8:02:11 AM GMT-3","Yes","There are too many too irrelevant. Quantum Computers are programmed at the gate level, which is nothing else than matrix multiplications. If something else is needed is something that includes hardware level control of the qubit platform.",Yes,"What it is called ""Quantum Programming Languages"" are not really so. They are wrappers of linear algebra functions. A new programming language capable of manipulating the system at the hardware level is needed to further progress quantum computers in NISQ.",Yes
+"2022/04/26 8:06:44 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 8:07:56 AM GMT-3","No",,,,
+"2022/04/26 8:08:03 AM GMT-3","Yes","Too many for the time being",Yes,"Not needed right now. ",No
+"2022/04/26 8:18:17 AM GMT-3","Yes","It's because there aren't many places I'm interested in yet.",NA,"As is the case with recent deep learning parts, if the API is provided in Python, more people will use it. And when a high level library (like numpy) is developed, many people will use it. I'm not a english user, but i do my best! and i can't choose my country..(south korea..)",Yes
+"2022/04/26 8:22:48 AM GMT-3","Yes","there're too may quantum languages, because many people want to make their own language or they have better abstraction for them. in a classical computing, everyone try to write their own language, interpreter or compiler. I think it's same as quantum computing, and it's a kind of culture of hackers.",Yes,"Yes, if someone finds a better abstraction for quantum computing, we might need it. for example, the Rust language provides new better abstraction and notation for memory lifetime. that's so game changing. I believe we will see a similar scenario on quantum computing.",Yes
+"2022/04/26 8:28:01 AM GMT-3","Yes","There is not yet one that has been proven useful, so this is simply too early to ask. First settle on the hardware systems, then look at this again. Meanwhile, provide low level hardware interfaces instead of wishful abstractions. So create as many ""languages"" as you wish and see how they work... then, once something more generally useful comes from this, it is time to look at languages again from that perspective.",No,"Very likley, once we know how it will rally work on the scales that are needed.",Yes
+"2022/04/26 8:29:45 AM GMT-3","Yes","Too many, but I think it's normal, until a more defined standard is adopted.",Yes,,NA
+"2022/04/26 8:33:35 AM GMT-3","Yes","Too many, similar all",Yes,"No",No
+"2022/04/26 8:34:57 AM GMT-3","Yes","there are still few quantum programming languages, and their abstraction level is still very low",No,"yes, because of the abstraction level",Yes
+"2022/04/26 8:39:26 AM GMT-3","Yes","Many. Because its just the beginning, rate of creating new ones will reduce and stabilize over time",Yes,"Nope. Just contribute to already existing ones",No
+"2022/04/26 8:58:12 AM GMT-3","Yes","These are frameworks. Most will die eventually. Computer scientists are curious people and we like to share and why not? The frameworks that can sustain themselves will be the ones that we all eventually use.",NA,"Your ""yet"" is a bit leading. These are not really languages. They are frameworks. We build a framework as a natural part of coding anything. Or rather we build engines and when it works well enough to share with the community, we call it a framework. When the community demands it a lot, then we try to find funding to ensure it stays alive. Quantum products are still pretty speculative right now. BUT, companies are desperate for talent. They need people to learn this stuff in small and big ways and everything in between. How they learn it and what framework they use is unimportant.",Yes
+"2022/04/26 9:02:34 AM GMT-3","Yes","Too many. Some features are duplicated, some projects are very poorly supported, it is harder to find the lingua franca for describing experiements.",Yes,"No. It would be better to make stable, well-supoted version of 2-3 platfrms.",No
+"2022/04/26 9:26:30 AM GMT-3","Yes","Too many. There must be a standard ",Yes,"No. Too many already",No
+"2022/04/26 9:41:17 AM GMT-3","Yes","Too many. Too little interoperability, too many by startups that will die soon.",Yes,"No. Libraries would be more useful. ",No
+"2022/04/26 9:53:17 AM GMT-3","Yes","too many. hard to know which one will last",Yes,"not sure",NA
+"2022/04/26 10:01:06 AM GMT-3","Yes","There is the right amount, this is an era of exploration",No,"Yes, there are many ideas that need to be explored especially as the number of qubits scales.",Yes
+"2022/04/26 10:05:27 AM GMT-3","Yes","-",NA,"-",NA
+"2022/04/26 10:05:44 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 10:21:24 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 10:24:07 AM GMT-3","No",,,,
+"2022/04/26 10:27:13 AM GMT-3","Yes","Neither; there’s no harm in exploring this design space, there can be as many languages as there are ideas.",No,"Yes: I don’t believe that any existing language has good expressibility, neither at a conceptual level nor at an implementation level, when working with moderate-to-large scale devices enacting an error correction scheme.",Yes
+"2022/04/26 10:40:17 AM GMT-3","Yes","Too many - there's a lot of overlap between the languages, most could be done if a single language was settled on.",Yes,,NA
+"2022/04/26 10:42:31 AM GMT-3","Yes","Wasn't aware of all the others, even",NA,,NA
+"2022/04/26 10:54:44 AM GMT-3","Yes",,NA,,NA
+"2022/04/26 11:18:41 AM GMT-3","Yes","Too many, unclear which can have future use and which I might be expected to know",Yes,"No, I think that the leader will be whoever can deliver larger quantum computers regardless of usability or practical concerns",No
+"2022/04/26 11:23:55 AM GMT-3","No",,,,
+"2022/04/26 11:29:34 AM GMT-3","No",,,,
+"2022/04/26 11:31:50 AM GMT-3","Yes","Too many",Yes,"No, consolidation is needed.",No
+"2022/04/26 11:53:41 AM GMT-3","Yes","Silly question. See classical programming languages, which number in the thousands.",No,"Yes, but a better one, a better composable one. The language must go hand-in-hand with an in-depth and understandable (to computer scientists) derivation. There is almost no resource that would do that today (that's why I wrote ""Quantum Computing for Programmers""). Thanks for this survery.",Yes
+"2022/04/26 12:00:22 PM GMT-3","Yes",,NA,,NA
+"2022/04/26 12:32:11 PM GMT-3","Yes",,NA,,NA
+"2022/04/26 1:04:56 PM GMT-3","Yes","Neither: the industry hasn't begun yet and is all speculative. Results & funding will narrow the field in time.",No,"I think the question doesn't matter until quantum computers become useful. Until then it's largely (and by necessity) an academic and speculative field. What'd be best is a framework that integrated closely with an existing programming language (ie. PyTorch for Python in ML, or NumPy).",NA
+"2022/04/26 1:45:52 PM GMT-3","Yes","Neither too many nor too few. Now is a period of experimentation.",No,"Probably not, but if someone wants to make one I would not discourage them.",No
+"2022/04/26 2:21:56 PM GMT-3","Yes","I didn’t know they was the whole list, and I think for a very low level language it’s already too much. For a better maintained and evolved language we should need like 3-4 languages where peoples work on them to make them the best possible and not create more and more. ",Yes,"No ! Or maybe or for kind of qcomputer who don’t have it yet. ",No
+"2022/04/26 3:21:13 PM GMT-3","Yes",,NA,,NA
+"2022/04/26 5:07:49 PM GMT-3","Yes","Too few is an understatement. We need to try as many ideas as possible to find the best combination of features for creating real-world quantum algorithms. ",No,"Yes. We need to continue iterating on the mistakes and shortcomings of previous languages to avoid getting trapped with outdated and problematic ecosystems (such as C/C++ in the classical computing world). Especially since QC tends to require surprisingly different approaches for relatively similar problems, the more languages for expressing these specialized solutions, the better. ",Yes
+"2022/04/26 6:07:53 PM GMT-3","Yes",,NA,,NA
+"2022/04/26 6:11:11 PM GMT-3","Yes","Too many, but that's usual for programming languages and tools of any kind ",Yes,,NA
+"2022/04/27 2:45:36 AM GMT-3","Yes","Right now there are just the right quantity of options, in the future maybe there is gonna be too many to know about",No,"I think not, the options right now fulfill all the requirements of the actual quantum computing market",No
+"2022/04/27 2:46:25 AM GMT-3","Yes","I prefer quality over quantity. If one language provides access to quantum systems, ability to enhance the digital and quantum features, then I am happy with that one, rather than trying to integrate multiple programming languages into a single application. This is the main reason I chose Qiskit, it provides all the hardware and software features needed when needed. ",NA,"No, same reason as above. I prefer quality over quantity. I would rather more features than more languages.",No
+"2022/04/27 2:53:50 AM GMT-3","Yes","Neither too many nor too few. I think it is good there is a variety. Many do seem to cover the same ground though, which is fine as everyone is experimenting. Perhaps only the best will survive, or the best parts will be combined into a new language. I'd like to see more variety in what they have to offer -- perhaps novel approaches or DSLs for specific areas.",No,"Yes. Many of the languages are quite basic in terms of what can be done with them given NISQ harware. Hopefully there is room for expansion and hardware capabilities and (again hopefully) new algorithms are discovered. Seeing the development of quantum languages unfold as hardware and new programming techniques are discovered is one of the things which attracts me to current QC. Experimenting with quantum language design is something I'd like to do myself (either contributing to existing projects, or on a small scale for a pedagogical / experimental project). Why: I think there is a lot of room for experimentation, and now is an exciting and appropriate time for experimentation with quantum language design.  ",Yes
+"2022/04/27 3:32:53 AM GMT-3","No",,,,
+"2022/04/27 7:19:56 AM GMT-3","Yes","There are too many because when you encounter a problem within the specific language you are using you have difficulty finding others with the same problem online whereas if there were a single one that suited everybody's needs then people would work together and be able to resolve errors much more easily.",Yes,"No, the existing ones are sufficient.",No
+"2022/04/27 8:03:11 AM GMT-3","Yes","Too many for one to be ubiquitous I think.",Yes,"Maybe, for my use case I beleve that a new Quantum Programming Languages, to be usefull would have to be general (simulate more than quantum computer, support quantum aannealing etc...), able to work on a wide range of hardware (distributed on cluster, GPU etc..)",Yes
+"2022/04/27 8:16:06 AM GMT-3","Yes",,NA,,NA
+"2022/04/27 8:49:09 AM GMT-3","Yes",,NA,,NA
+"2022/04/27 9:05:36 AM GMT-3","Yes",,NA,,NA
+"2022/04/27 10:33:14 AM GMT-3","Yes","The field is immature and a good enough solution has not yet emerged.",No,"Possible. After all, current existed tools are immature, especially for quickly yet developing hardware.",Yes
+"2022/04/27 10:44:05 AM GMT-3","Yes","Too many. ",Yes,"No",No
+"2022/04/27 1:52:51 PM GMT-3","Yes","Too many being developed with the current ones going unsupported. Everyone wants to rule the world but nobody wants to build or repair it! In QISKIT for example the networkx library is outmoded and we are needing Reworkx to work far more seemlessly. this has not happened. Why? IBM, a huge conglomerate and probably the gold standard in quantum computing as a company are somehow not comitted to this gaping flaw? Also where is the research focus into the fundamentals of the limitis of quantum computing on single chipsets? where is the focus on developing variational quantum algorithm libraries in existing languages to work between adiabatic and gate-based photonic computers and networks.",Yes,"No. They need to stay focus on the languages they have and build them to network better between different hardware at the very least and to improve the visualization, with better more up to date circuit mapping libraries, along with native debugging of code. we do not need multiple new codes, new courses when the same old problems have not been adressed.",No
+"2022/04/27 4:24:28 PM GMT-3","Yes","In practice Qiskit, Cirq and Pennylane are the most used ones.Then there are some specially fast for research, but most people sick with Qiskit.",NA,"Probably not, there are many which are not used",No
+"2022/04/27 5:14:37 PM GMT-3","Yes","too few, they are still quite low level, like assembly. we need user oriented q. programmin languages, like c.",No,"yes, see above",Yes
+"2022/04/27 9:24:45 PM GMT-3","Yes",,NA,,NA
+"2022/04/28 3:05:55 AM GMT-3","Yes","Too many",Yes,"No, the existing libraries should be extended instead",No
+"2022/04/28 4:00:26 AM GMT-3","No",,,,
+"2022/04/28 8:55:07 AM GMT-3","Yes","About right -  it doesn't matter because only the best will have a significant user base.",No,"Need an open source language with the capabilities of Classiq and TKET.",Yes
+"2022/04/28 9:24:43 AM GMT-3","Yes",,NA,,NA
+"2022/04/28 3:23:09 PM GMT-3","Yes","Many",Yes,"No",No
+"2022/04/28 8:33:17 PM GMT-3","Yes","too many",Yes,,NA
+"2022/04/29 4:29:58 AM GMT-3","Yes","There are many of them, for sure. Too many? Maybe but it's quite understandable because there is still no real standard for a sort of ASM language and/or CPU.",Yes,"Let us standardise the hardware design, try to have a common ASM, and build higher-level languages using that.",Yes
+"2022/04/29 1:18:56 PM GMT-3","Yes","Yes, because many company run for hardware platform competition.",Yes,"No.",No
+"2022/04/29 5:05:33 PM GMT-3","Yes","Too many. Just look at the list in your previous question. It's ridiculous.",Yes,"Who cares what my opinion of the future is. Stupid question. But FWIW probably yes, because there are too many players all doing their own thing.",NA
+"2022/04/30 12:34:06 AM GMT-3","Yes","Too many (at the moment)",Yes,,NA
+"2022/05/01 8:25:14 AM GMT-3","Yes","There are too many languages. It spreads community's consideration, and quantum programming ecosystem becomes divergent.",Yes,"Quantum developers need a couple of ""canonical"" widely-used languages. They can be chosen from already developed leading languages.",Yes
+"2022/05/01 6:40:27 PM GMT-3","Yes","Too many for not understanding what the fundamentals are. Not all of the languages can be taken seriously, if only because we don't know what is actually important in a quantum programming language as of yet.",Yes,"Yes. Quantum Programming Languages that work for large circuits don't really exist yet.",Yes
+"2022/05/02 4:17:28 AM GMT-3","No",,,,
+"2022/05/02 8:26:23 PM GMT-3","Yes","Too few meaningful/practical languages",No,"Yes. Most if not all of the current programs are based on circuits which are way too low level ",Yes
+"2022/05/03 8:46:09 AM GMT-3","Yes","too many that do not come close to the current programming paradigms",Yes,"Maybe, to be more inclusive of programmers without a strong background in physics or math",Yes
+"2022/05/03 1:09:27 PM GMT-3","No",,,,
+"2022/05/05 4:10:53 AM GMT-3","Yes","Too many, It difficult for technical communication, and I don't have so much time to learning",Yes,"I don't think so, there are too many languages  there, maybe the one that's going to be popular eventually will be one of them.",No
+"2022/05/05 4:58:37 AM GMT-3","No",,,,
+"2022/05/05 5:21:01 AM GMT-3","No",,,,
+"2022/05/05 5:26:44 AM GMT-3","Yes","I think current programming languages are missing important points on compilability into real hardware, which is going to be error- corrected. Moreover, quantum programs should be integrated with classical real-time control electronics because of the short coherence times. I think that the whole field of high-level quantum programming will undergo a signifant paradigm shift once few-logical-qubit implementations will be available. You won't get any RX, RY RZ stuff, because they are not implementable in a error-correction fabric, and you will need magic state factories and all that stuff. The nice syntax we are using especially for VQE now is completely out of touch will the reality of error-corrected computing",No,"Yes, because of error correction in real devices",Yes
+"2022/05/05 5:31:45 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 5:39:28 AM GMT-3","No",,,,
+"2022/05/05 5:40:11 AM GMT-3","Yes","The existing ones need to be worked on more instead of coming up with many small scale ones.",Yes,"Maybe one that will set an industry standard",Yes
+"2022/05/05 5:42:06 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 5:43:29 AM GMT-3","Yes","I don't know.",NA,"I don't know.",NA
+"2022/05/05 5:46:51 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 5:57:34 AM GMT-3","No",,,,
+"2022/05/05 5:58:44 AM GMT-3","Yes","Given that we're only scratching the surface, the current abundance of languages is good from the point of view of figuring out how to do stuff. When we reach maturity, such abundance might start proving disorienting and fragmenting to the community.",No,"Because of the complementary relationship between classical and quantum programming (i.e. classical pre- and post-processing of qubit-based computations) I favor the view that quantum programming should be carried out by means of libraries or embedded DSLs within existing languages, rather than by inventing new languages. Long story short, I don't think we need new languages.",No
+"2022/05/05 6:14:14 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 7:01:30 AM GMT-3","No",,,,
+"2022/05/05 7:25:15 AM GMT-3","Yes","yes",Yes,,NA
+"2022/05/05 7:30:28 AM GMT-3","No",,,,
+"2022/05/05 7:34:33 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 7:48:15 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 8:03:28 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 8:08:19 AM GMT-3","No",,,,
+"2022/05/05 8:15:03 AM GMT-3","No",,,,
+"2022/05/05 8:22:03 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 8:22:24 AM GMT-3","No",,,,
+"2022/05/05 8:23:21 AM GMT-3","No",,,,
+"2022/05/05 9:14:25 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 9:28:01 AM GMT-3","Yes","Too many! ",Yes,,NA
+"2022/05/05 9:58:11 AM GMT-3","No",,,,
+"2022/05/05 10:26:24 AM GMT-3","Yes","standardizaation is good.  i hope qasm3 helps this.",NA,"not really.",No
+"2022/05/05 10:27:00 AM GMT-3","Yes","Almost every quantum company or institute create their own language.  It is good since people are exploring use for quantum computation, and technology is in development.  Since I'm researching quantum circuit simulators, it is also nice to have many choices to compare.",No,"In the near future, the software developed today will become obsolete, and people will take advantage of the experiences then create newer language.  The new language may not be very different from today's, but it should preserve the essence of quantum computation and its applications",Yes
+"2022/05/05 10:46:35 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 11:02:12 AM GMT-3","No",,,,
+"2022/05/05 11:24:13 AM GMT-3","Yes",,NA,,NA
+"2022/05/05 11:48:07 AM GMT-3","Yes","There are too many, not enough good AND stable at the same time",Yes,"Probably qiskit will win the race",NA
+"2022/05/05 1:10:53 PM GMT-3","No",,,,
+"2022/05/05 1:20:21 PM GMT-3","No",,,,
+"2022/05/05 1:26:27 PM GMT-3","Yes",,NA,,NA
+"2022/05/05 1:32:32 PM GMT-3","Yes",,NA,,NA
+"2022/05/05 1:57:12 PM GMT-3","Yes",,NA,,NA
+"2022/05/05 2:17:57 PM GMT-3","Yes","Too few - multiple varied approaches allow for faster testing and surfacing of new ideas that work better",No,"I'm partial to Qrack, but I'm open to the idea of any person writing a new language, who is so motivated.",Yes
+"2022/05/05 3:00:19 PM GMT-3","No",,,,
+"2022/05/05 3:53:00 PM GMT-3","Yes","Too many — on standard yet",Yes,"No.",No
+"2022/05/05 7:18:23 PM GMT-3","Yes","Too many. better to unify criteria",Yes,"No.",No
+"2022/05/06 12:37:18 AM GMT-3","No",,,,
+"2022/05/06 6:14:46 AM GMT-3","Yes","I think there's probably the right amount for now.",No,"Probably more high level stuff will be needed in the future",Yes
+"2022/05/06 8:22:58 AM GMT-3","Yes","Too many. There should be fewer, more robust languages",Yes,"Better debugging, testing and higher level quantum languages",Yes
+"2022/05/06 10:00:12 AM GMT-3","Yes",,NA,,NA
+"2022/05/06 12:50:30 PM GMT-3","Yes",,NA,,NA
+"2022/05/06 3:39:01 PM GMT-3","Yes","Too many because they are largely vendor specific and tailored to certain hardware types (trapped ions vs photonic for instance)",Yes,"General purpose languages that will work across many vendors and hardware are needed for wide adoption, similar to the advent of high level languages vs assembly",Yes
+"2022/05/08 9:06:06 PM GMT-3","Yes",,NA,,NA
+"2022/05/09 8:15:24 AM GMT-3","Yes","Too many, standardization needs to take place",Yes,"yes to diversify as many will become obsolete or very niche",Yes
+"2022/05/09 11:30:13 AM GMT-3","Yes","Too many, but in a good way. Being able to learn from several languages and find the best features allows the more popular ones to grow. Allowing novel, weird, and non-traditional thoughts to develop may find a better way to express QC that relying on the older CS, math, and physics forms and notations. ",Yes,"There is room for a language that more effectively enables orchestration between quantum expression and control hardware, but the control platforms are so diverse and ideally will standardize as better devices are built. ",Yes
+"2022/05/09 12:55:55 PM GMT-3","Yes",,NA,,NA
+"2022/05/09 2:51:55 PM GMT-3","Yes",,NA,"I think libraries and tooling built in existing languages would be more useful in the near term.",No
+"2022/05/09 5:29:32 PM GMT-3","No",,,,
+"2022/05/11 12:21:28 PM GMT-3","Yes",,NA,,NA
+"2022/05/12 12:31:12 AM GMT-3","Yes","Too many. Right now, it seems there is a language for each type of hardware, and it is hard to figure out what is the advantage of one language over another. ",Yes,"Yes. Right now, it seems each language I have been exposed to isn’t actually a language; it’s either a framework that exists within another language, or it’s low-level like assembly. I think there would be a benefit to having a popular language that exists on its own for quantum, that does but feel like just an extension of another language like Python. That way, the developer is free to focus on just the quantum problem itself, and they works then access a compiled program externally, as is often done in classical computing today. ",Yes
+"2022/05/12 1:54:21 PM GMT-3","Yes",,NA,"No, they can try to upgrade their languages. This is just as the many classical programming languages.",No
+"2022/05/13 3:38:04 PM GMT-3","Yes","Too many, there needs to be a standard, so programs can develop",Yes,,NA
+"2022/05/16 7:29:40 AM GMT-3","Yes","As far as I know, we are still designing the programs close to low-level programming and the most widespread tools (Qiskit, CirQ, etc) are packages of already existent classical programming languages. So my perception is that that there aren't many quantum programming languages nowadays. I understand quantum programming languages as high-level languages desinged to be understood by all quantum computing platforms as classical high-level languages try to do with classical computers.",No,"I'm a beginner with quantum programming, so I think i don't know what may quantum developers need in the future. But I believe that every new tool should be welcome.",NA
+"2022/05/18 3:08:06 PM GMT-3","Yes",,NA,"No",No
+"2022/05/18 3:14:17 PM GMT-3","Yes","Too many. With every company trying to monopolize the market, it becomes very hard to have a truly general purpose quantum language that all major parties accept. ",Yes,,NA
+"2022/05/18 3:32:37 PM GMT-3","No",,,,
+"2022/05/18 3:39:21 PM GMT-3","Yes","Too many. Instead of developing hundreds of languages, we should collaborate on existing projects.",Yes,"Yes and no. Languages like silq are extremely interesting (automatic uncomputation), but their syntax looks and feels ancient at the very least (very much C-like). Although working with quantum circuits is basically low level, using a modern syntax is quite a desiderable feature (better legibility, cleaner structure, ...). Maybe when framework like qiskit will include complete uncomputation, the game will be settled.",NA
+"2022/05/18 4:22:31 PM GMT-3","Yes",,NA,,NA
+"2022/05/18 4:52:51 PM GMT-3","Yes",,NA,,NA
+"2022/05/18 5:26:44 PM GMT-3","Yes","too many",Yes,"i think perhaps extensions of pre-existing QPLs are all that will be needed. I dont suppose there will be fundamental change to quantum computers in the near future that would largely alter how we code them. I think it might just be a question of to what degree the complexity of code will reach",No
+"2022/05/18 6:37:30 PM GMT-3","No",,,,
+"2022/05/18 7:13:47 PM GMT-3","Yes",,NA,,NA
+"2022/05/18 8:41:24 PM GMT-3","Yes","Too few. Open source competition will bring out the best platform. ",No,"Yes. Because the space is so new, quantum algorithms and hybrid solvers need documentation and packages that incorporate new techniques, which are constantly being updated/invented. ",Yes
+"2022/05/19 1:16:22 AM GMT-3","Yes","Optimum number of languages available just needed to be updated",No,"No",No
+"2022/05/19 1:32:39 AM GMT-3","Yes",,NA,,NA
+"2022/05/19 4:43:50 AM GMT-3","Yes","Too few. We need more so we can find out what works and what doesn’t. Feels like we’re very much still learning the balance with our language abstractions. ",No,"Sure, if it contributes to our understanding of what a good quantum programming language is . There are a lot of fairly good languages already; another language for the sake of it would not be helpful. But if a language developer has an insight around how to balance the layers of abstractions and manage quantum information in a novel, elegant way then they should pursue it. Here’s the reasoning behind that statement with a contemporary example: Python’s a beautiful language with some wonderful design and features, but it took decades of research, many failed languages, and a few successful ones (and enhancements to the hardware) to get to a language like Python. We’re not there yet with quantum languages and I don’t believe that the “weirdness” of quantum information is the problem — it’s the abstractions. They can make it intuitive.  ",Yes
+"2022/05/19 5:08:56 AM GMT-3","Yes","While i don't think many of these languages are useful for large scale development, there are good academic resources. I think there should be more.",No,"I don't think devs need another language in the near future. However abstractions, interesting libraries etc of newer, more experimental can be ported back into mainstream languages. This makes the experience better for everyone",No
+"2022/05/19 5:59:02 AM GMT-3","Yes",,NA,,NA
+"2022/05/19 6:57:12 AM GMT-3","No",,,,
+"2022/05/19 7:54:17 AM GMT-3","Yes","Too many, at this level of maturity of q computing I thing having so many options hinder the opportunity to deep dive into actually relevant things ",Yes,"No we already have a lot just improving the ones that are good is fine ",No
+"2022/05/19 9:32:05 AM GMT-3","No",,,,
+"2022/05/19 10:10:01 AM GMT-3","Yes","Need to explore more first, but more can be good for competition.",NA,"Maybe in the future some languages will be used for different applications, who knows =)",Yes
+"2022/05/20 12:51:15 PM GMT-3","Yes",,NA,,NA
+"2022/05/21 12:03:05 PM GMT-3","Yes","Too many, but that is to be expected. People smell opportunities.",Yes,"No",No
+"2022/05/24 8:32:11 AM GMT-3","Yes","Too many languages, too few ideas.",Yes,,NA
+"2022/05/24 8:51:57 AM GMT-3","Yes","Too few. We don't expect all to remain supported for very long, but we are still in the early stages of understanding the workflows and design considerations for quantum and hybrid computation, so the more contributions we have the better future languages can be. Especially as there is little agreement amongst the broader community on an abstract machine that languages should implement and those that devices provide are rapidly changing. Of course, conversion to a good long-lasting standard would be ideal, but this will only be achieved once sufficient tools and design principles have been identified, often by the creation of new (probably short-lived) languages",No,"The capabilities of different quantum computers are incredibly diverse and changing, and the different levels of users have drastically different requirements on programming. At least in the short-term, until the hardware and user landscape settle on a common paradigm, having different languages - or at least different standardised fragments of an expressive language - is the best solution. A good example of this is the slow adoption of mid-circuit measurement, conditional gate application, and real-time classical instructions that could drastically change the presentation of a circuit and many languages either do not support this, or expect this as a given and so are inappropriate in the short-term until this feature is common-place",Yes
+"2022/05/24 8:57:37 AM GMT-3","Yes","Too many doing the same thing.",Yes,"Not in the near future. We need to improve abstraction and tools in the ones we currently have.",No
+"2022/05/24 9:31:44 AM GMT-3","Yes","Possibly yes, its sometimes hard to understand how the different langauges compare i.e. what does this language offer me that another doesn't. On the other hand given that quantum computing/programming is an evolving field maybe it makes sense to have a plurality of approaches",Yes,"Maybe not - There are already a broad range of options available for different use cases. Although I'm not sure about this.",No
+"2022/05/25 7:21:27 PM GMT-3","Yes","To many without good documentation/tutorials. ",Yes,"Can’t answer that based on my knowledge level. ",NA
+"2022/05/26 1:06:03 AM GMT-3","Yes",,NA,,NA
+"2022/05/26 2:11:36 AM GMT-3","Yes","I think languages should be consolidated to a single backen (like Qasm) and use different syntactic sugar for different applications. Also there should be more languages where you directly work with the math.",No,"Like I said above, there should be a language to directly work with the math.",Yes
+"2022/05/26 3:32:20 AM GMT-3","Yes",,NA,,NA
+"2022/05/26 3:31:08 PM GMT-3","Yes",,NA,,NA
+"2022/05/26 5:19:45 PM GMT-3","No",,,,
+"2022/05/30 1:09:24 AM GMT-3","No",,,,
+"2022/05/31 8:47:21 AM GMT-3","No",,,,
+"2022/05/31 3:26:22 PM GMT-3","Yes","too many with no bridge between them. Need to standardize them. Don't think the solution is making them compile into each other is sufficient, need to standardize the thoughts and either go fully mathematical or fully programming -> currently prefer building quantum circuits in QASM because it feels like maths and not programming. languages try to make it seem like programming but the sequential/object nature of programming doesn't translate well now and need to find a more standardized way to presenting quantum programs.",Yes,"They would need a new language based on a new way of thinking about programming otherwise it will all be only mathematicians making algorithms and quantum programmers just writing out maths in terms of gates/optimizing gates",Yes
