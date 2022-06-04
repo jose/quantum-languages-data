@@ -86,6 +86,32 @@ make_pie_plot <- function(df, fill) {
   print(p)
 }
 
+make_dodge_plot <- function(df, x, v, legendsTitle) {
+  # FIXME x-axis scale
+  # Basic dodgeplot
+  p <- ggplot(df, aes(x=x, fill=v))
+  p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
+  # Change x axis label
+  p <- p + scale_x_discrete(name='')
+  # Change y axis label
+  p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
+  # Remove legend's title and increase size of [x-y]axis labels
+  p <- p + theme(legend.position='top',
+    axis.text.x=element_text(size=14,  hjust=0.5, vjust=0.5),
+    axis.text.y=element_text(size=14,  hjust=1.0, vjust=0.0),
+    axis.title.x=element_text(size=14, hjust=0.5, vjust=0.0),
+    axis.title.y=element_text(size=14, hjust=0.5, vjust=0.5)
+  )
+  # Change legend's title
+  p <- p + labs(fill=legendsTitle)
+  # Add labels over bars
+  p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
+  # Make it horizontal
+  p <- p + coord_flip()
+  # Plot it
+  print(p)
+}
+
 #
 # Have you ever used any Quantum Programming Language?
 #
@@ -263,17 +289,17 @@ remove(agg)
 #
 # What Quantum Programming Languages / frameworks have you been using and for how long?
 #
-
 plot_label('What Quantum Programming Languages / frameworks have you \nbeen using and for how long?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(used_qpls, sep=';'))
 agg <- aggregate(x=. ~ timestamp + used_qpls + used_qpls_value, data=agg, FUN=length)
 agg <- agg[agg$'used_qpls_value' != '', ]
 
-# ------ TODO make the following a function so that others could use it
+#make_dodge_plot(agg, x='used_qpls', v='used_qpls_value', legendsTitle='How long')
+
 # FIXME x-axis scale
-# Basic barplot
-p <- ggplot(agg, aes(x=used_qpls, fill=used_qpls_value))
+# Basic dodgeplot
+p <- ggplot(df, aes(x=used_qpls, fill=used_qpls_value))
 p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
 # Change x axis label
 p <- p + scale_x_discrete(name='')
@@ -294,6 +320,8 @@ p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((roun
 p <- p + coord_flip()
 # Plot it
 print(p)
+
+remove(agg)
 
 #
 # Which of the following is your primary Quantum Programming Language / framework?
