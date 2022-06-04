@@ -39,7 +39,7 @@ make_bar_plot <- function(df, x) {
   # Change x axis label
   p <- p + scale_x_discrete(name='')
   # Change y axis label
-  p <- p + scale_y_continuous(name='# Number of participants', labels = scales::percent_format(scale = 1))
+  p <- p + scale_y_continuous(name='', labels = scales::percent_format(scale = 1))
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='none',
     axis.text.x=element_text(size=16,  hjust=0.5, vjust=0.5),
@@ -411,6 +411,24 @@ agg$'tools_test'[agg$'tools_test' %!in% c('Cirq Simulator and Testing - cirq.tes
 agg <- aggregate(x=. ~ timestamp + tools_test, data=agg, FUN=length)
 make_bar_plot(agg, x='tools_test')
 #make_pie_plot(agg, fill='tools_test')
+remove(agg)
+
+#
+# In your opinion, do you think there are too many or too few Quantum Programming Languages? Why?
+#
+plot_label('In your opinion, do you think there are too many or too few \nQuantum Programming Languages? Why?')
+agg <- aggregate(x=. ~ timestamp + why_too_many_qpl_resp, data=df, FUN=length)
+#make_bar_plot(agg, x='why_too_many_qpl_resp')
+make_pie_plot(agg, fill='why_too_many_qpl_resp')
+remove(agg)
+
+#
+# In your opinion, do you think that quantum developers would need yet another Quantum Programming Languages in the near future? Why?
+#
+plot_label('In your opinion, do you think that quantum developers would need yet another \nQuantum Programming Languages in the near future? Why?')
+agg <- aggregate(x=. ~ timestamp + why_need_another_qpl_resp, data=df, FUN=length)
+#make_bar_plot(agg, x='why_need_another_qpl_resp')
+make_pie_plot(agg, fill='why_need_another_qpl_resp')
 remove(agg)
 
 # Close output file
