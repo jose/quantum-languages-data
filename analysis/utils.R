@@ -148,9 +148,8 @@ pre_process_data <- function(df) {
   all_colnames_but_rate_primary_qpl <- setdiff(all_colnames, rate_primary_qpl_colnames)
   df <- melt(df, id.vars=all_colnames_but_rate_primary_qpl, measure.vars=rate_primary_qpl_colnames)
 
+  names(df)[names(df) == 'variable'] <- 'rate_primary_qpl'
   names(df)[names(df) == 'value']    <- 'rate_primary_qpl_value'
-  names(df)[names(df) == 'variable'] <- 'rate_primary_qpl_name'
-  df$'rate_primary_qpl_name' <- as.factor(df$'rate_primary_qpl_name')
   pretty_rate_primary_qpl <- function(rate_primary_qpl) {
     if (rate_primary_qpl == 'rate_primary_qpl_features') {
       return('features')
@@ -166,8 +165,9 @@ pre_process_data <- function(df) {
       return('easy to code')
     }
   }
-  df$'rate_primary_qpl_name' <- sapply(df$'rate_primary_qpl_name', pretty_rate_primary_qpl)
-
+  df$'rate_primary_qpl' <- sapply(df$'rate_primary_qpl', pretty_rate_primary_qpl)
+  df$'rate_primary_qpl' <- as.factor(df$'rate_primary_qpl')
+  
   # used_qpls_*
   #
   all_colnames               <- colnames(df)
