@@ -66,7 +66,6 @@ make_bar_plot <- function(df, x, lblPercentual) {
 make_pie_plot <- function(df, fill, lblPercentual) {
   # Create a barplot to visualize the data
   p <- ggplot(df, aes_string(x=factor(1), fill=fill)) + geom_bar(width=1)
-  
   # Create pie-chart plot
   p <- p + coord_polar('y', start=0)
   # Add text to each slice
@@ -97,10 +96,10 @@ make_pie_plot <- function(df, fill, lblPercentual) {
   print(p)
 }
 
-make_dodge_plot <- function(df, x, fill, legendsTitle) {
+make_dodge_plot <- function(df, x, fill, legend_title='') {
   # FIXME x-axis scale
   # Basic dodgeplot
-  p <- ggplot(df, aes(x=x, fill=fill))
+  p <- ggplot(df, aes(x=get(x), fill=get(fill)))
   p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
   # Change x axis label
   p <- p + scale_x_discrete(name='')
@@ -114,7 +113,7 @@ make_dodge_plot <- function(df, x, fill, legendsTitle) {
     axis.title.y=element_text(size=14, hjust=0.5, vjust=0.5)
   )
   # Change legend's title
-  p <- p + labs(fill=legendsTitle)
+  p <- p + labs(fill='')
   # Add labels over bars
   p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
   # Make it horizontal
@@ -333,33 +332,7 @@ plot_label('What Quantum Programming Languages / frameworks have you \nbeen usin
 agg <- as.data.frame(df %>% separate_rows(used_qpls, sep=';'))
 agg <- aggregate(x=country ~ timestamp + used_qpls + used_qpls_value, data=agg, FUN=length)
 agg <- agg[agg$'used_qpls_value' != '', ]
-#make_dodge_plot(agg, x='used_qpls', fill='used_qpls_value', legendsTitle='How long')
-
-# FIXME x-axis scale
-# CONVERT to a function
-# Basic dodgeplot
-p <- ggplot(df, aes(x=used_qpls, fill=used_qpls_value))
-p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
-# Change x axis label
-p <- p + scale_x_discrete(name='')
-# Change y axis label
-p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
-# Remove legend's title and increase size of [x-y]axis labels
-p <- p + theme(legend.position='top',
-  axis.text.x=element_text(size=14,  hjust=0.5, vjust=0.5),
-  axis.text.y=element_text(size=14,  hjust=1.0, vjust=0.0),
-  axis.title.x=element_text(size=14, hjust=0.5, vjust=0.0),
-  axis.title.y=element_text(size=14, hjust=0.5, vjust=0.5)
-)
-# Change legend's title
-p <- p + labs(fill='How long')
-# Add labels over bars
-p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
-# Make it horizontal
-p <- p + coord_flip()
-# Plot it
-print(p)
-
+make_dodge_plot(agg, 'used_qpls', 'used_qpls_value', 'How long')
 remove(agg)
 
 #
@@ -382,30 +355,11 @@ plot_label('In terms of ease, rate your primary Quantum Programming Language.')
 agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl, sep=';'))
 agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value, data=agg, FUN=length)
 agg <- agg[agg$'rate_primary_qpl_value' != '', ]
-#make_dodge_plot(agg, x='rate_primary_qpl', fill='rate_primary_qpl_value', legendsTitle='')
+make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value')
 
-# Basic dodgeplot
-p <- ggplot(agg, aes(x=rate_primary_qpl, fill=rate_primary_qpl_value))
-p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
-# Change x axis label
-p <- p + scale_x_discrete(name='')
-# Change y axis label
-p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
-# Remove legend's title and increase size of [x-y]axis labels
-p <- p + theme(legend.position='top',
-  axis.text.x=element_text(size=14,  hjust=0.5, vjust=0.5),
-  axis.text.y=element_text(size=14,  hjust=1.0, vjust=0.0),
-  axis.title.x=element_text(size=14, hjust=0.5, vjust=0.0),
-  axis.title.y=element_text(size=14, hjust=0.5, vjust=0.5)
-)
-# Change legend's title
-p <- p + labs(fill='')
-# Add labels over bars
-p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
-# Make it horizontal
-p <- p + coord_flip()
-# Plot it
-print(p)
+print(head(agg))
+print(summary(agg))
+stopifnot(TRUE == FALSE)
 
 remove(agg)
 #
