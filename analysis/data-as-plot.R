@@ -356,11 +356,6 @@ agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl, sep=';'))
 agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value, data=agg, FUN=length)
 agg <- agg[agg$'rate_primary_qpl_value' != '', ]
 make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value')
-
-print(head(agg))
-print(summary(agg))
-stopifnot(TRUE == FALSE)
-
 remove(agg)
 #
 # Which forums, e.g., to ask for help, search for examples, do you use? (if any)
