@@ -461,8 +461,24 @@ plot_label('What tools do you use to test your Quantum Programs?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(tools_test, sep=';'))
 # Replace open-answers with 'Other'
-agg$'tools_test'[agg$'tools_test' %!in% c('Cirq Simulator and Testing - cirq.testing (https://quantumai.google/cirq)', 'Forest using pytest (https://github.com/rigetti/forest-software)', 'MTQC - Mutation Testing for Quantum Computing (https://javpelle.github.io/MTQC/)', 'Muskit: A Mutation Analysis Tool for Quantum Software Testing (https://ieeexplore.ieee.org/document/9678563)', 'ProjectQ Simulator (https://arxiv.org/abs/1612.08091)', 'QDiff - Differential Testing of Quantum Software Stacks (https://ieeexplore.ieee.org/abstract/document/9678792)', 'QDK - xUnit (https://azure.microsoft.com/en-us/resources/development-kit/quantum-computing/)', 'Qiskit - QASM Simulator (https://qiskit.org/)', 'QuanFuzz - Fuzz Testing of Quantum Program (https://arxiv.org/abs/1810.10310)', 'Quito - A Coverage-Guided Test Generator for Quantum Programs (https://ieeexplore.ieee.org/abstract/document/9678798)', 'Straberry Fields using pytest (https://strawberryfields.ai/)')] <- 'Other'
+agg$'tools_test'[agg$'tools_test' %!in% c(
+  'Cirq Simulator and Testing - cirq.testing (https://quantumai.google/cirq)',
+  'Forest using pytest (https://github.com/rigetti/forest-software)',
+  'MTQC - Mutation Testing for Quantum Computing (https://javpelle.github.io/MTQC/)',
+  'Muskit: A Mutation Analysis Tool for Quantum Software Testing (https://ieeexplore.ieee.org/document/9678563)',
+  'ProjectQ Simulator (https://arxiv.org/abs/1612.08091)',
+  'QDiff - Differential Testing of Quantum Software Stacks (https://ieeexplore.ieee.org/abstract/document/9678792)',
+  'QDK - xUnit (https://azure.microsoft.com/en-us/resources/development-kit/quantum-computing/)',
+  'Qiskit - QASM Simulator (https://qiskit.org/)',
+  'QuanFuzz - Fuzz Testing of Quantum Program (https://arxiv.org/abs/1810.10310)',
+  'Quito - A Coverage-Guided Test Generator for Quantum Programs (https://ieeexplore.ieee.org/abstract/document/9678798)',
+  'Straberry Fields using pytest (https://strawberryfields.ai/)')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + tools_test, data=agg, FUN=length)
+# Attempt to pretty print tools' names
+pretty_testing_tools_names <- function(testing_tool_name) {
+  return(gsub(" \\(.*\\)$", '', testing_tool_name))
+}
+agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_testing_tools_names)
 make_bar_plot(agg, x='tools_test', TRUE)
 #make_pie_plot(agg, fill='tools_test', FALSE)
 remove(agg)
