@@ -167,7 +167,8 @@ pre_process_data <- function(df) {
   }
   df$'rate_primary_qpl' <- sapply(df$'rate_primary_qpl', pretty_rate_primary_qpl)
   df$'rate_primary_qpl' <- as.factor(df$'rate_primary_qpl')
-  
+  df$'rate_primary_qpl_value' <- as.factor(df$'rate_primary_qpl_value')
+
   # used_qpls_*
   #
   all_colnames               <- colnames(df)
