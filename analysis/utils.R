@@ -7,6 +7,7 @@ library('reshape2')
 
 # Environment variables
 RAW_DATA_FILE <- '../data/survey.csv'
+OPEN_QUESTIONS_DATA_FILE <- '../data/survey_open_questions.csv'
 
 # --------------------------------------------------------------------- Wrappers
 
