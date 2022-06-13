@@ -140,7 +140,6 @@ df <- df[df$'used_qpl' == 'Yes', ]
 #
 # What is your age?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 # FIXME X axis scale in percentual is wrong
 plot_label('What is your age?')
 agg <- aggregate(x=country ~ timestamp + age, data=df, FUN=length)
@@ -151,7 +150,6 @@ remove(agg)
 #
 # Where do you live? (Country)
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 # FIXME X axis scale in percentual is wrong
 plot_label('Where do you live? (Country)')
 agg <- aggregate(x=age ~ timestamp + country, data=df, FUN=length)
@@ -481,26 +479,6 @@ pretty_testing_tools_names <- function(testing_tool_name) {
 agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_testing_tools_names)
 make_bar_plot(agg, x='tools_test', TRUE)
 #make_pie_plot(agg, fill='tools_test', FALSE)
-remove(agg)
-
-#
-# In your opinion, do you think there are too many or too few Quantum Programming Languages? Why?
-#
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
-plot_label('In your opinion, do you think there are too many or too few \nQuantum Programming Languages? Why?')
-agg <- aggregate(x=country ~ timestamp + why_too_many_qpl_resp, data=df, FUN=length)
-#make_bar_plot(agg, x='why_too_many_qpl_resp', FALSE)
-make_pie_plot(agg, fill='why_too_many_qpl_resp', TRUE)
-remove(agg)
-
-#
-# In your opinion, do you think that quantum developers would need yet another Quantum Programming Languages in the near future? Why?
-#
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
-plot_label('In your opinion, do you think that quantum developers would need yet another \nQuantum Programming Languages in the near future? Why?')
-agg <- aggregate(x=country ~ timestamp + why_need_another_qpl_resp, data=df, FUN=length)
-#make_bar_plot(agg, x='why_need_another_qpl_resp', FALSE)
-make_pie_plot(agg, fill='why_need_another_qpl_resp', TRUE)
 remove(agg)
 
 # Close output file
