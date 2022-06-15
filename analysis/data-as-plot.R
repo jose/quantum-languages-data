@@ -160,7 +160,6 @@ remove(agg)
 #
 # Which of the following describe you?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('Which of the following describe you?')
 agg <- aggregate(x=country ~ timestamp + gender, data=df, FUN=length)
 #make_bar_plot(agg, x='gender', FALSE)
@@ -170,7 +169,6 @@ remove(agg)
 #
 # How many years have you been coding?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 # FIXME X axis scale in percentual is wrong
 plot_label('How many years have you been coding?')
 agg <- aggregate(x=country ~ timestamp + years_coding, data=df, FUN=length)
@@ -181,7 +179,6 @@ remove(agg)
 #
 # How many years have you coded professionally (as a part of your work)?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 # FIXME X axis scale in percentual is wrong
 plot_label('How many years have you coded professionally (as a part\nof your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally, data=df, FUN=length)
@@ -192,7 +189,6 @@ remove(agg)
 #
 # How did you learn to code?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 # FIXME X axis scale in percentual and values are wrong due to multiple choice question
 plot_label('How did you learn to code?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
@@ -200,7 +196,7 @@ agg <- as.data.frame(df %>% separate_rows(learned_code, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_code'[agg$'learned_code' %!in% c('Books / Physical media', 'Coding Bootcamp', 'Colleague', 'Friend or family member', 'Online Courses or Certification', 'Online Forum', 'Other online resources (videos, blogs, etc)', 'School')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_code, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_code', TRUE)
+make_bar_plot(agg, x='learned_code', FALSE)
 #make_pie_plot(agg, fill='learned_code', FALSE)
 remove(agg)
 
@@ -215,7 +211,7 @@ agg <- as.data.frame(df %>% separate_rows(used_programming_language, sep=';'))
 # Replace open-answers with 'Other'
 agg$'used_programming_language'[agg$'used_programming_language' %!in% c('Assembly', 'Bash', 'C', 'Classic Visual Basic', 'COBOL', 'C++', 'C#', 'Delphi/Object Pascal', 'Fortran', 'F#', 'Go', 'Groovy', 'Haskell', 'Java', 'JavaScrpit', 'Julia', 'Lisp', 'Matlab', 'ML', 'Objective-C', 'Pascal', 'Perl', 'pGCL', 'PHP', 'PowerShell', 'Prolog', 'Python', 'Ruby', 'SQL', 'Standard ML', 'Swift', 'Visual Basic', 'Visual C++')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + used_programming_language, data=agg, FUN=length)
-make_bar_plot(agg, x='used_programming_language', TRUE)
+make_bar_plot(agg, x='used_programming_language', FALSE)
 #make_pie_plot(agg, fill='used_programming_language', FALSE)
 remove(agg)
 
@@ -239,7 +235,7 @@ agg <- as.data.frame(df %>% separate_rows(learned_quantum_physics, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_quantum_physics'[agg$'learned_quantum_physics' %!in% c('Books', 'Online Course', 'Search Sites', 'University', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_quantum_physics, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_quantum_physics', TRUE)
+make_bar_plot(agg, x='learned_quantum_physics', FALSE)
 #make_pie_plot(agg, fill='learned_quantum_physics', TRUE)
 remove(agg)
 
@@ -266,7 +262,7 @@ agg <- as.data.frame(df %>% separate_rows(major, sep=';'))
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + major, data=agg, FUN=length)
-make_bar_plot(agg, x='major', TRUE)
+make_bar_plot(agg, x='major', FALSE)
 #make_pie_plot(agg, fill='major', FALSE)
 remove(agg)
 
@@ -282,7 +278,7 @@ agg <- as.data.frame(df %>% separate_rows(job, sep=';'))
 # Replace open-answers with 'Other'
 agg$'job'[agg$'job' %!in% c('Academic researcher', 'Architect', 'Business Analyst', 'CIO / CEO / CTO', 'DBA (Database Administrator)', 'Data Analyst / Data Engineer/ Data Scientist', 'Developer Advocate', 'Developer / Programmer / Software Engineer', 'DevOps Engineer / Infrastructure Developer', 'Instructor / Teacher / Tutor', 'Marketing Manager', 'Product Manager', 'Project Manager', 'Scientist / Researcher', 'Student', 'Systems Analyst', 'Team Lead', 'Technical Support', 'Technical Writer', 'Tester / QA Engineer', 'UX / UI Designer')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + job, data=agg, FUN=length)
-make_bar_plot(agg, x='job', TRUE)
+make_bar_plot(agg, x='job', FALSE)
 #make_pie_plot(agg, fill='job', FALSE)
 remove(agg)
 
@@ -297,7 +293,7 @@ agg <- as.data.frame(df %>% separate_rows(learned_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_qpl'[agg$'learned_qpl' %!in% c('Books', 'Language documentation', 'University', 'Online Course', 'Online Forums', 'Search Sites', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_qpl, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_qpl', TRUE)
+make_bar_plot(agg, x='learned_qpl', FALSE)
 #make_pie_plot(agg, fill='learned_qpl', FALSE)
 remove(agg)
 
@@ -381,7 +377,7 @@ agg <- as.data.frame(df %>% separate_rows(qpl_future, sep=';'))
 # Replace open-answers with 'Other'
 agg$'qpl_future'[agg$'qpl_future' %!in% c('Blackbird', 'Braket SDK', 'Cirq', 'Cove', 'cQASM', 'CQP (Communication Quantum Processes)', 'cQPL', 'Forest', 'Ket', 'LanQ', '𝐿𝐼𝑄𝑈𝑖|⟩', 'NDQFP', 'NDQJava', 'Ocean Software', 'OpenQASM', 'Orquestra', 'ProjectQ', 'Q Language', 'QASM (Quantum Macro Assembler)', 'QCL (Quantum Computation Language)', 'QDK (Quantum Development Kit)', 'QHAL', 'Qiskit', 'qGCL', 'QHaskell', 'QML', 'QPAlg (Quantum Process Algebra)', 'QPL and QFC', 'QSEL', 'QuaFL (DSL for quantum programming)', 'Quil', 'Quipper', 'Q#', '𝑄|𝑆𝐼⟩', 'Sabry\'s Language', 'Scaffold', 'Silq', 'Strawberry Fields', '𝜆𝑞 (Lambda Calculi)')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + qpl_future, data=agg, FUN=length)
-make_bar_plot(agg, x='qpl_future', TRUE)
+make_bar_plot(agg, x='qpl_future', FALSE)
 #make_pie_plot(agg, fill='qpl_future', FALSE)
 remove(agg)
 
@@ -396,7 +392,7 @@ agg <- as.data.frame(df %>% separate_rows(why_like_try_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'why_like_try_qpl'[agg$'why_like_try_qpl' %!in% c('Heard about the language', 'Is part of a course about the language', 'Read an article about the language', 'Widely used', 'Other features')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + why_like_try_qpl, data=agg, FUN=length)
-make_bar_plot(agg, x='why_like_try_qpl', TRUE)
+make_bar_plot(agg, x='why_like_try_qpl', FALSE)
 #make_pie_plot(agg, fill='why_like_try_qpl', FALSE)
 remove(agg)
 
@@ -435,7 +431,7 @@ agg <- as.data.frame(df %>% separate_rows(how_often_test, sep=';'))
 # Replace open-answers with 'Other'
 agg$'how_often_test'[agg$'how_often_test' %!in% c('Before go to production', 'Every day', 'Every time you change the code')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + how_often_test, data=agg, FUN=length)
-make_bar_plot(agg, x='how_often_test', TRUE)
+make_bar_plot(agg, x='how_often_test', FALSE)
 #make_pie_plot(agg, fill='how_often_test', TRUE)
 remove(agg)
 
@@ -477,7 +473,7 @@ pretty_testing_tools_names <- function(testing_tool_name) {
   return(gsub(" \\(.*\\)$", '', testing_tool_name))
 }
 agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_testing_tools_names)
-make_bar_plot(agg, x='tools_test', TRUE)
+make_bar_plot(agg, x='tools_test', FALSE)
 #make_pie_plot(agg, fill='tools_test', FALSE)
 remove(agg)
 
