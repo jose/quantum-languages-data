@@ -62,7 +62,7 @@ listDf[[9]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.
 names(listDf[[9]])[1] <- 'Ket'
 listDf[[10]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...LanQ.
 names(listDf[[10]])[1] <- 'LanQ'
-listDf[[11]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...ð...ð...ð...ð...ð....âŸ..
+listDf[[11]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...LIQUi...
 names(listDf[[11]])[1] <- '$LIQUi|\\rangle$'
 listDf[[12]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...NDQFP.
 names(listDf[[12]])[1] <- 'NDQFP'
@@ -108,7 +108,7 @@ listDf[[32]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been
 names(listDf[[32]])[1] <- 'Quipper'
 listDf[[33]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Q..
 names(listDf[[33]])[1] <- 'Q\\#'
-listDf[[34]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...ð....ð...ð...âŸ..
+listDf[[34]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Q.SI..
 names(listDf[[34]])[1] <- '$Q|SI\\rangle$'
 listDf[[35]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Sabry.s.Language.
 names(listDf[[35]])[1] <- 'Sabry\'s Language'
@@ -118,7 +118,7 @@ listDf[[37]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been
 names(listDf[[37]])[1] <- 'Silq'
 listDf[[38]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Strawberry.Fields.
 names(listDf[[38]])[1] <- 'Strawberry Field'
-listDf[[39]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...ð.œ.ð..ž..Lambda.Calculi..
+listDf[[39]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Lambda.Calculi.
 names(listDf[[39]])[1] <- '$\\lambda_{q}$'
 listDf[[40]] <- df$What.Quantum.Programming.Languages...frameworks.have.you.been.using.and.for.how.long...Other.
 names(listDf[[40]])[1] <- 'Other'
