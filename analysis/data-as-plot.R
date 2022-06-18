@@ -104,7 +104,8 @@ make_dodge_plot <- function(df, x, fill, legend_title='') {
   # Change x axis label
   p <- p + scale_x_discrete(name='')
   # Change y axis label
-  p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
+  #p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
+  p <- p + scale_y_continuous(name='# Number of participants')
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='top',
     axis.text.x=element_text(size=14,  hjust=0.5, vjust=0.5),
@@ -115,7 +116,8 @@ make_dodge_plot <- function(df, x, fill, legend_title='') {
   # Change legend's title
   p <- p + labs(fill='')
   # Add labels over bars
-  p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
+  #p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
+  p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
@@ -140,7 +142,7 @@ df <- df[df$'used_qpl' == 'Yes', ]
 #
 # What is your age?
 #
-# FIXME X axis scale in percentual is wrong
+# FIXME X axis scale in percentage is wrong
 plot_label('What is your age?')
 agg <- aggregate(x=country ~ timestamp + age, data=df, FUN=length)
 make_bar_plot(agg, x='age', TRUE)
@@ -150,7 +152,7 @@ remove(agg)
 #
 # Where do you live? (Country)
 #
-# FIXME X axis scale in percentual is wrong
+# FIXME X axis scale in percentage is wrong
 plot_label('Where do you live? (Country)')
 agg <- aggregate(x=age ~ timestamp + country, data=df, FUN=length)
 make_bar_plot(agg, x='country', TRUE)
@@ -169,7 +171,7 @@ remove(agg)
 #
 # How many years have you been coding?
 #
-# FIXME X axis scale in percentual is wrong
+# FIXME X axis scale in percentage is wrong
 plot_label('How many years have you been coding?')
 agg <- aggregate(x=country ~ timestamp + years_coding, data=df, FUN=length)
 make_bar_plot(agg, x='years_coding', TRUE)
@@ -179,7 +181,7 @@ remove(agg)
 #
 # How many years have you coded professionally (as a part of your work)?
 #
-# FIXME X axis scale in percentual is wrong
+# FIXME X axis scale in percentage is wrong
 plot_label('How many years have you coded professionally (as a part\nof your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally, data=df, FUN=length)
 make_bar_plot(agg, x='years_coded_professionally', TRUE)
@@ -189,7 +191,7 @@ remove(agg)
 #
 # How did you learn to code?
 #
-# FIXME X axis scale in percentual and values are wrong due to multiple choice question
+# FIXME X axis scale and values (percentage graph)
 plot_label('How did you learn to code?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_code, sep=';'))
@@ -203,8 +205,7 @@ remove(agg)
 #
 # What are the most used programming, scripting, and markup languages have you used?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
-# FIXME X axis scale in percentual and values are wrong due to multiple choice question
+# FIXME X axis scale and values (percentage graph)
 plot_label('What are the most used programming, scripting, and markup\n languages have you used?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(used_programming_language, sep=';'))
@@ -218,7 +219,6 @@ remove(agg)
 #
 # What is your level of knowledge in Quantum Physics?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('What is your level of knowledge in Quantum Physics?')
 agg <- aggregate(x=country ~ timestamp + level_quantum_physics, data=df, FUN=length)
 #make_bar_plot(agg, x='level_quantum_physics', TRUE)
@@ -228,10 +228,12 @@ remove(agg)
 #
 # Where did you learn Quantum Physics?
 #
-# FIXME Missing answers (207 responses) - Problem in the aggregate function
+# FIXME X axis scale and values (percentage graph)
 plot_label('Where did you learn Quantum Physics?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_quantum_physics, sep=';'))
+# Remove empty answers (not answered)
+agg <- agg[agg$'learned_quantum_physics' != '', ]
 # Replace open-answers with 'Other'
 agg$'learned_quantum_physics'[agg$'learned_quantum_physics' %!in% c('Books', 'Online Course', 'Search Sites', 'University', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_quantum_physics, data=agg, FUN=length)
@@ -242,11 +244,13 @@ remove(agg)
 #
 # Which of the following best describes the highest level of education that you have completed?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
-# FIXME Y axis Labels - too large
-# FIXME X axis scale in percentual is wrong
+# FIXME X axis scale in percentage is wrong
 plot_label('Which of the following best describes the highest level\nof education that you have completed?')
 agg <- aggregate(x=country ~ timestamp + level_education, data=df, FUN=length)
+pretty_level_education_names <- function(level_education_name) {
+  return(gsub('Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)', 'Secondary', level_education_name))
+}
+agg$'level_education' <- sapply(agg$'level_education', pretty_level_education_names)
 make_bar_plot(agg, x='level_education', TRUE)
 #make_pie_plot(agg, fill='level_education', FALSE)
 remove(agg)
@@ -254,11 +258,12 @@ remove(agg)
 #
 # If you have completed a major, what is the subject?
 #
-# FIXME Missing answers (189 responses) - Problem in the aggregate function
-# FIXME X axis scale in percentual and values are wrong due to multiple choice question
+# FIXME X axis scale and values (percentage graph)
 plot_label('If you have completed a major, what is the subject?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(major, sep=';'))
+# Remove empty answers (not answered)
+agg <- agg[agg$'major' != '', ]
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + major, data=agg, FUN=length)
@@ -269,9 +274,7 @@ remove(agg)
 #
 # Which of the following describes your current job?
 #
-# FIXME Missing answers (208 responses) - Problem in the aggregate function
-# FIXME Y axis labels - too large
-# FIXME X axis scale in percentual and values are wrong due to multiple choice question
+# FIXME X axis scale and values (percentage graph)
 plot_label('Which of the following describes your current job?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(job, sep=';'))
@@ -285,8 +288,7 @@ remove(agg)
 #
 # Where and how did you learn Quantum Programming Languages?
 #
-# FIXME Missing answers (208 responses) - Problem in the aggregate function
-# FIXME X axis scale in percentual and values are wrong due to multiple choice question
+# FIXME X axis scale and values (percentage graph)
 plot_label('Where and how did you learn Quantum Programming Languages?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_qpl, sep=';'))
@@ -300,7 +302,6 @@ remove(agg)
 #
 # How many years have you been coding using Quantum Programming Languages?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('How many years have you been coding using Quantum \nProgramming Languages?')
 agg <- aggregate(x=country ~ timestamp + years_coded_qpls, data=df, FUN=length)
 #make_bar_plot(agg, x='years_coded_qpls', FALSE)
@@ -310,7 +311,6 @@ remove(agg)
 #
 # How many years have you coded professionally using Quantum Programming \nLanguages (as a part of your work)?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('How many years have you coded professionally using Quantum \nProgramming Languages (as a part of your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally_qpls, data=df, FUN=length)
 #make_bar_plot(agg, x='years_coded_professionally_qpls', FALSE)
@@ -320,7 +320,7 @@ remove(agg)
 #
 # What Quantum Programming Languages / frameworks have you been using and for how long?
 #
-# FIXME Missing answers - Problem in the aggregate function
+# FIXME X axis scale and values (percentage graph)
 plot_label('What Quantum Programming Languages / frameworks have you \nbeen using and for how long?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(used_qpls, sep=';'))
@@ -332,7 +332,7 @@ remove(agg)
 #
 # Which of the following is your primary Quantum Programming Language / framework?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
+# FIXME X scale (percentage)
 plot_label('Which of the following is your primary Quantum Programming \nLanguage / framework?')
 agg <- aggregate(x=country ~ timestamp + primary_qpl, data=df, FUN=length)
 make_bar_plot(agg, x='primary_qpl', TRUE)
@@ -342,40 +342,40 @@ remove(agg)
 #
 # In terms of ease, rate your primary Quantum Programming Language.
 #
-# FIXME Missing answers  - Problem in the aggregate function
-# FIXME Report is not working
+# FIXME X axis scale and values (percentage graph)
 plot_label('In terms of ease, rate your primary Quantum Programming Language.')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl, sep=';'))
-agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value, data=agg, FUN=length)
+agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value + primary_qpl, data=agg, FUN=length)
 agg <- agg[agg$'rate_primary_qpl_value' != '', ]
+agg <- agg[agg$'primary_qpl' == 'Qiskit', ]
 make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value')
 remove(agg)
 #
 # Which forums, e.g., to ask for help, search for examples, do you use? (if any)
 #
-# FIXME Missing answers (172 responses) - Problem in the aggregate function
-# FIXME X axis scale in percentual and values (percentual)
+# FIXME X axis scale and values (percentage graph)
 plot_label('Which forums, e.g., to ask for help, search for examples, \ndo you use? (if any)')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(forum, sep=';'))
+# Remove empty answers (not answered)
+agg <- agg[agg$'forum' != '', ]
 # Replace open-answers with 'Other'
 agg$'forum'[agg$'forum' %!in% c('Devtalk', 'Quantum Open Source Foundation', 'Slack', 'StackOverflow')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + forum, data=agg, FUN=length)
-make_bar_plot(agg, x='forum', TRUE)
-#make_pie_plot(agg, fill='forum', FALSE)
+make_bar_plot(agg, x='forum', FALSE)
+#make_pie_plot(agg, fill='forum', TRUE)
 remove(agg)
 
 #
 # Which Quantum Programming Languages / frameworks would you like to work or try in the near future?
 #
-# FIXME Missing answers (208 responses) - Problem in the aggregate function
-# FIXME X axis scale in percentual and values (percentual)
+# FIXME X axis scale in percentage and values (percentage)
 plot_label('Which Quantum Programming Languages / frameworks would you \nlike to work or try in the near future?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(qpl_future, sep=';'))
 # Replace open-answers with 'Other'
-agg$'qpl_future'[agg$'qpl_future' %!in% c('Blackbird', 'Braket SDK', 'Cirq', 'Cove', 'cQASM', 'CQP (Communication Quantum Processes)', 'cQPL', 'Forest', 'Ket', 'LanQ', '𝐿𝐼𝑄𝑈𝑖|⟩', 'NDQFP', 'NDQJava', 'Ocean Software', 'OpenQASM', 'Orquestra', 'ProjectQ', 'Q Language', 'QASM (Quantum Macro Assembler)', 'QCL (Quantum Computation Language)', 'QDK (Quantum Development Kit)', 'QHAL', 'Qiskit', 'qGCL', 'QHaskell', 'QML', 'QPAlg (Quantum Process Algebra)', 'QPL and QFC', 'QSEL', 'QuaFL (DSL for quantum programming)', 'Quil', 'Quipper', 'Q#', '𝑄|𝑆𝐼⟩', 'Sabry\'s Language', 'Scaffold', 'Silq', 'Strawberry Fields', '𝜆𝑞 (Lambda Calculi)')] <- 'Other'
+agg$'qpl_future'[agg$'qpl_future' %!in% c('Blackbird', 'Braket SDK', 'Cirq', 'Cove', 'cQASM', 'CQP (Communication Quantum Processes)', 'cQPL', 'Forest', 'Ket', 'LanQ', 'LIQUi|>', 'NDQFP', 'NDQJava', 'Ocean Software', 'OpenQASM', 'Orquestra', 'ProjectQ', 'Q Language', 'QASM (Quantum Macro Assembler)', 'QCL (Quantum Computation Language)', 'QDK (Quantum Development Kit)', 'QHAL', 'Qiskit', 'qGCL', 'QHaskell', 'QML', 'QPAlg (Quantum Process Algebra)', 'QPL and QFC', 'QSEL', 'QuaFL (DSL for quantum programming)', 'Quil', 'Quipper', 'Q#', 'Q|SI>', 'Sabry\'s Language', 'Scaffold', 'Silq', 'Strawberry Fields', 'Lambda Calculi')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + qpl_future, data=agg, FUN=length)
 make_bar_plot(agg, x='qpl_future', FALSE)
 #make_pie_plot(agg, fill='qpl_future', FALSE)
@@ -384,8 +384,7 @@ remove(agg)
 #
 # Why would you like to work or try those languages / frameworks?
 #
-# FIXME Missing answers (208 responses) - Problem in the aggregate function
-# FIXME X axis scale in percentual and values (percentual)
+# FIXME X axis scale in percentage and values (percentage)
 plot_label('Why would you like to work or try those languages / frameworks?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(why_like_try_qpl, sep=';'))
@@ -399,7 +398,6 @@ remove(agg)
 #
 # How do you use Quantum Programming Languages? 
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('How do you use Quantum Programming Languages?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(how_use_qpl, sep=';'))
@@ -413,7 +411,6 @@ remove(agg)
 #
 # Do you test your Quantum Programs?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
 plot_label('Do you test your Quantum Programs?')
 agg <- aggregate(x=country ~ timestamp + do_test, data=df, FUN=length)
 #make_bar_plot(agg, x='do_test', FALSE)
@@ -423,22 +420,21 @@ remove(agg)
 #
 # How often do you test your Quantum Programs?
 #
-# FIXME Verify why returning only 203 lines instead of 208 - Problem in the aggregate function
-# FIXME X axis scale in percentual and values (percentual)
 plot_label('How often do you test your Quantum Programs?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(how_often_test, sep=';'))
+# Remove empty answers (not answered)
+agg <- agg[agg$'how_often_test' != '', ]
 # Replace open-answers with 'Other'
-agg$'how_often_test'[agg$'how_often_test' %!in% c('Before go to production', 'Every day', 'Every time you change the code')] <- 'Other'
+agg$'how_often_test'[agg$'how_often_test' %!in% c('Before go to production', 'Every day', 'Every time you change the code', '')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + how_often_test, data=agg, FUN=length)
-make_bar_plot(agg, x='how_often_test', FALSE)
-#make_pie_plot(agg, fill='how_often_test', TRUE)
+#make_bar_plot(agg, x='how_often_test', FALSE)
+make_pie_plot(agg, fill='how_often_test', TRUE)
 remove(agg)
 
 #
 # How do you test your Quantum Programs? 
 #
-# FIXME Missing answers ( responses) - Problem in the aggregate function
 plot_label('How do you test your Quantum Programs?')
 agg <- aggregate(x=country ~ timestamp + how_test, data=df[df$'how_test' != '', ], FUN=length)
 #make_bar_plot(agg, x='how_test', FALSE)
@@ -448,12 +444,13 @@ remove(agg)
 #
 # What tools do you use to test your Quantum Programs?
 #
-# FIXME Missing answers ( responses) - Problem in the aggregate function
 # FIXME Y axis labels - too large
-# FIXME X axis scale in percentual and values (percentual)
+# FIXME X axis scale in percentage and values (percentage)
 plot_label('What tools do you use to test your Quantum Programs?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(tools_test, sep=';'))
+# Remove empty answers (not answered)
+agg <- agg[agg$'tools_test' != '', ]
 # Replace open-answers with 'Other'
 agg$'tools_test'[agg$'tools_test' %!in% c(
   'Cirq Simulator and Testing - cirq.testing (https://quantumai.google/cirq)',
