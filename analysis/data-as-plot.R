@@ -40,7 +40,8 @@ make_bar_plot <- function(df, x, lblPercentual) {
   p <- p + scale_x_discrete(name='')
   # Change y axis label
   if(lblPercentual == TRUE){
-    p <- p + scale_y_continuous(name='', labels = scales::percent_format(scale = 1))
+    total <- nrow(agg)
+    p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
   } else {   
       p <- p + scale_y_continuous(name='# Number of participants')
   }
@@ -97,7 +98,6 @@ make_pie_plot <- function(df, fill, lblPercentual) {
 }
 
 make_dodge_plot <- function(df, x, fill, legend_title='') {
-  # FIXME x-axis scale
   # Basic dodgeplot
   p <- ggplot(df, aes(x=get(x), fill=get(fill)))
   p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
@@ -142,7 +142,6 @@ df <- df[df$'used_qpl' == 'Yes', ]
 #
 # What is your age?
 #
-# FIXME X axis scale in percentage is wrong
 plot_label('What is your age?')
 agg <- aggregate(x=country ~ timestamp + age, data=df, FUN=length)
 make_bar_plot(agg, x='age', TRUE)
@@ -152,7 +151,6 @@ remove(agg)
 #
 # Where do you live? (Country)
 #
-# FIXME X axis scale in percentage is wrong
 plot_label('Where do you live? (Country)')
 agg <- aggregate(x=age ~ timestamp + country, data=df, FUN=length)
 make_bar_plot(agg, x='country', TRUE)
@@ -171,7 +169,6 @@ remove(agg)
 #
 # How many years have you been coding?
 #
-# FIXME X axis scale in percentage is wrong
 plot_label('How many years have you been coding?')
 agg <- aggregate(x=country ~ timestamp + years_coding, data=df, FUN=length)
 make_bar_plot(agg, x='years_coding', TRUE)
@@ -181,7 +178,6 @@ remove(agg)
 #
 # How many years have you coded professionally (as a part of your work)?
 #
-# FIXME X axis scale in percentage is wrong
 plot_label('How many years have you coded professionally (as a part\nof your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally, data=df, FUN=length)
 make_bar_plot(agg, x='years_coded_professionally', TRUE)
@@ -244,7 +240,6 @@ remove(agg)
 #
 # Which of the following best describes the highest level of education that you have completed?
 #
-# FIXME X axis scale in percentage is wrong
 plot_label('Which of the following best describes the highest level\nof education that you have completed?')
 agg <- aggregate(x=country ~ timestamp + level_education, data=df, FUN=length)
 pretty_level_education_names <- function(level_education_name) {
@@ -332,7 +327,6 @@ remove(agg)
 #
 # Which of the following is your primary Quantum Programming Language / framework?
 #
-# FIXME X scale (percentage)
 plot_label('Which of the following is your primary Quantum Programming \nLanguage / framework?')
 agg <- aggregate(x=country ~ timestamp + primary_qpl, data=df, FUN=length)
 make_bar_plot(agg, x='primary_qpl', TRUE)
@@ -351,6 +345,7 @@ agg <- agg[agg$'rate_primary_qpl_value' != '', ]
 agg <- agg[agg$'primary_qpl' == 'Qiskit', ]
 make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value')
 remove(agg)
+
 #
 # Which forums, e.g., to ask for help, search for examples, do you use? (if any)
 #
