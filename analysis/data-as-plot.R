@@ -33,14 +33,13 @@ pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
 # Add a cover page to the output file
 plot_label('Data as pieplots and barplots')
 
-make_bar_plot <- function(df, x, lblPercentual) {
+make_bar_plot <- function(df, x, lblPercentual, total) {
   # Basic barplot
   p <- ggplot(df, aes_string(x=x)) + geom_bar(width=0.90)
   # Change x axis label
   p <- p + scale_x_discrete(name='')
   # Change y axis label
   if(lblPercentual == TRUE){
-    total <- nrow(agg)
     p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
   } else {   
       p <- p + scale_y_continuous(name='# Number of participants')
@@ -54,7 +53,7 @@ make_bar_plot <- function(df, x, lblPercentual) {
   )
   # Add labels over bars
   if(lblPercentual == TRUE){
-     p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
+     p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   } else {   
    p <- p + stat_count(geom='text', colour='black', size=6, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   }
@@ -97,15 +96,18 @@ make_pie_plot <- function(df, fill, lblPercentual) {
   print(p)
 }
 
-make_dodge_plot <- function(df, x, fill, legend_title='') {
+make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   # Basic dodgeplot
   p <- ggplot(df, aes(x=get(x), fill=get(fill)))
   p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
   # Change x axis label
   p <- p + scale_x_discrete(name='')
   # Change y axis label
-  #p <- p + scale_y_continuous(name='', labels=scales::percent_format(scale=1))
-  p <- p + scale_y_continuous(name='# Number of participants')
+  if(lblPercentual == TRUE){
+    p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
+  } else {   
+      p <- p + scale_y_continuous(name='# Number of participants')
+  }
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='top',
     axis.text.x=element_text(size=14,  hjust=0.5, vjust=0.5),
@@ -116,8 +118,11 @@ make_dodge_plot <- function(df, x, fill, legend_title='') {
   # Change legend's title
   p <- p + labs(fill='')
   # Add labels over bars
-  #p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), '%', sep='')), position=position_dodge(width=0.9), hjust=-0.15)
-  p <- p + stat_count(geom='text', colour='black', size=2.5, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
+  if(lblPercentual == TRUE){
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
+  } else {   
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
+  }
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
@@ -144,7 +149,7 @@ df <- df[df$'used_qpl' == 'Yes', ]
 #
 plot_label('What is your age?')
 agg <- aggregate(x=country ~ timestamp + age, data=df, FUN=length)
-make_bar_plot(agg, x='age', TRUE)
+make_bar_plot(agg, x='age', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='age', FALSE)
 remove(agg)
 
@@ -153,7 +158,7 @@ remove(agg)
 #
 plot_label('Where do you live? (Country)')
 agg <- aggregate(x=age ~ timestamp + country, data=df, FUN=length)
-make_bar_plot(agg, x='country', TRUE)
+make_bar_plot(agg, x='country', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='country', FALSE)
 remove(agg)
 
@@ -171,7 +176,7 @@ remove(agg)
 #
 plot_label('How many years have you been coding?')
 agg <- aggregate(x=country ~ timestamp + years_coding, data=df, FUN=length)
-make_bar_plot(agg, x='years_coding', TRUE)
+make_bar_plot(agg, x='years_coding', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='years_coding', FALSE)
 remove(agg)
 
@@ -180,35 +185,33 @@ remove(agg)
 #
 plot_label('How many years have you coded professionally (as a part\nof your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally, data=df, FUN=length)
-make_bar_plot(agg, x='years_coded_professionally', TRUE)
+make_bar_plot(agg, x='years_coded_professionally', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='years_coded_professionally', FALSE)
 remove(agg)
 
 #
 # How did you learn to code?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('How did you learn to code?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_code, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_code'[agg$'learned_code' %!in% c('Books / Physical media', 'Coding Bootcamp', 'Colleague', 'Friend or family member', 'Online Courses or Certification', 'Online Forum', 'Other online resources (videos, blogs, etc)', 'School')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_code, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_code', FALSE)
+make_bar_plot(agg, x='learned_code', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='learned_code', FALSE)
 remove(agg)
 
 #
 # What are the most used programming, scripting, and markup languages have you used?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('What are the most used programming, scripting, and markup\n languages have you used?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(used_programming_language, sep=';'))
 # Replace open-answers with 'Other'
 agg$'used_programming_language'[agg$'used_programming_language' %!in% c('Assembly', 'Bash', 'C', 'Classic Visual Basic', 'COBOL', 'C++', 'C#', 'Delphi/Object Pascal', 'Fortran', 'F#', 'Go', 'Groovy', 'Haskell', 'Java', 'JavaScrpit', 'Julia', 'Lisp', 'Matlab', 'ML', 'Objective-C', 'Pascal', 'Perl', 'pGCL', 'PHP', 'PowerShell', 'Prolog', 'Python', 'Ruby', 'SQL', 'Standard ML', 'Swift', 'Visual Basic', 'Visual C++')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + used_programming_language, data=agg, FUN=length)
-make_bar_plot(agg, x='used_programming_language', FALSE)
+make_bar_plot(agg, x='used_programming_language', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='used_programming_language', FALSE)
 remove(agg)
 
@@ -224,7 +227,6 @@ remove(agg)
 #
 # Where did you learn Quantum Physics?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('Where did you learn Quantum Physics?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_quantum_physics, sep=';'))
@@ -233,7 +235,7 @@ agg <- agg[agg$'learned_quantum_physics' != '', ]
 # Replace open-answers with 'Other'
 agg$'learned_quantum_physics'[agg$'learned_quantum_physics' %!in% c('Books', 'Online Course', 'Search Sites', 'University', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_quantum_physics, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_quantum_physics', FALSE)
+make_bar_plot(agg, x='learned_quantum_physics', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='learned_quantum_physics', TRUE)
 remove(agg)
 
@@ -246,14 +248,13 @@ pretty_level_education_names <- function(level_education_name) {
   return(gsub('Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)', 'Secondary', level_education_name))
 }
 agg$'level_education' <- sapply(agg$'level_education', pretty_level_education_names)
-make_bar_plot(agg, x='level_education', TRUE)
+make_bar_plot(agg, x='level_education', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='level_education', FALSE)
 remove(agg)
 
 #
 # If you have completed a major, what is the subject?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('If you have completed a major, what is the subject?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(major, sep=';'))
@@ -262,35 +263,33 @@ agg <- agg[agg$'major' != '', ]
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + major, data=agg, FUN=length)
-make_bar_plot(agg, x='major', FALSE)
+make_bar_plot(agg, x='major', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='major', FALSE)
 remove(agg)
 
 #
 # Which of the following describes your current job?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('Which of the following describes your current job?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(job, sep=';'))
 # Replace open-answers with 'Other'
 agg$'job'[agg$'job' %!in% c('Academic researcher', 'Architect', 'Business Analyst', 'CIO / CEO / CTO', 'DBA (Database Administrator)', 'Data Analyst / Data Engineer/ Data Scientist', 'Developer Advocate', 'Developer / Programmer / Software Engineer', 'DevOps Engineer / Infrastructure Developer', 'Instructor / Teacher / Tutor', 'Marketing Manager', 'Product Manager', 'Project Manager', 'Scientist / Researcher', 'Student', 'Systems Analyst', 'Team Lead', 'Technical Support', 'Technical Writer', 'Tester / QA Engineer', 'UX / UI Designer')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + job, data=agg, FUN=length)
-make_bar_plot(agg, x='job', FALSE)
+make_bar_plot(agg, x='job', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='job', FALSE)
 remove(agg)
 
 #
 # Where and how did you learn Quantum Programming Languages?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('Where and how did you learn Quantum Programming Languages?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(learned_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_qpl'[agg$'learned_qpl' %!in% c('Books', 'Language documentation', 'University', 'Online Course', 'Online Forums', 'Search Sites', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_qpl, data=agg, FUN=length)
-make_bar_plot(agg, x='learned_qpl', FALSE)
+make_bar_plot(agg, x='learned_qpl', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='learned_qpl', FALSE)
 remove(agg)
 
@@ -315,13 +314,12 @@ remove(agg)
 #
 # What Quantum Programming Languages / frameworks have you been using and for how long?
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('What Quantum Programming Languages / frameworks have you \nbeen using and for how long?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(used_qpls, sep=';'))
 agg <- aggregate(x=country ~ timestamp + used_qpls + used_qpls_value, data=agg, FUN=length)
 agg <- agg[agg$'used_qpls_value' != '', ]
-make_dodge_plot(agg, 'used_qpls', 'used_qpls_value', 'How long')
+make_dodge_plot(agg, 'used_qpls', 'used_qpls_value', 2.5, TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
 #
@@ -329,27 +327,25 @@ remove(agg)
 #
 plot_label('Which of the following is your primary Quantum Programming \nLanguage / framework?')
 agg <- aggregate(x=country ~ timestamp + primary_qpl, data=df, FUN=length)
-make_bar_plot(agg, x='primary_qpl', TRUE)
+make_bar_plot(agg, x='primary_qpl', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='primary_qpl', FALSE)
 remove(agg)
 
 #
 # In terms of ease, rate your primary Quantum Programming Language.
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('In terms of ease, rate your primary Quantum Programming Language.')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl, sep=';'))
 agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value + primary_qpl, data=agg, FUN=length)
 agg <- agg[agg$'rate_primary_qpl_value' != '', ]
 agg <- agg[agg$'primary_qpl' == 'Qiskit', ]
-make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value')
+make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value', 4, TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
 #
 # Which forums, e.g., to ask for help, search for examples, do you use? (if any)
 #
-# FIXME X axis scale and values (percentage graph)
 plot_label('Which forums, e.g., to ask for help, search for examples, \ndo you use? (if any)')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(forum, sep=';'))
@@ -358,35 +354,33 @@ agg <- agg[agg$'forum' != '', ]
 # Replace open-answers with 'Other'
 agg$'forum'[agg$'forum' %!in% c('Devtalk', 'Quantum Open Source Foundation', 'Slack', 'StackOverflow')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + forum, data=agg, FUN=length)
-make_bar_plot(agg, x='forum', FALSE)
+make_bar_plot(agg, x='forum', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='forum', TRUE)
 remove(agg)
 
 #
 # Which Quantum Programming Languages / frameworks would you like to work or try in the near future?
 #
-# FIXME X axis scale in percentage and values (percentage)
 plot_label('Which Quantum Programming Languages / frameworks would you \nlike to work or try in the near future?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(qpl_future, sep=';'))
 # Replace open-answers with 'Other'
 agg$'qpl_future'[agg$'qpl_future' %!in% c('Blackbird', 'Braket SDK', 'Cirq', 'Cove', 'cQASM', 'CQP (Communication Quantum Processes)', 'cQPL', 'Forest', 'Ket', 'LanQ', 'LIQUi|>', 'NDQFP', 'NDQJava', 'Ocean Software', 'OpenQASM', 'Orquestra', 'ProjectQ', 'Q Language', 'QASM (Quantum Macro Assembler)', 'QCL (Quantum Computation Language)', 'QDK (Quantum Development Kit)', 'QHAL', 'Qiskit', 'qGCL', 'QHaskell', 'QML', 'QPAlg (Quantum Process Algebra)', 'QPL and QFC', 'QSEL', 'QuaFL (DSL for quantum programming)', 'Quil', 'Quipper', 'Q#', 'Q|SI>', 'Sabry\'s Language', 'Scaffold', 'Silq', 'Strawberry Fields', 'Lambda Calculi')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + qpl_future, data=agg, FUN=length)
-make_bar_plot(agg, x='qpl_future', FALSE)
+make_bar_plot(agg, x='qpl_future', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='qpl_future', FALSE)
 remove(agg)
 
 #
 # Why would you like to work or try those languages / frameworks?
 #
-# FIXME X axis scale in percentage and values (percentage)
 plot_label('Why would you like to work or try those languages / frameworks?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(why_like_try_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'why_like_try_qpl'[agg$'why_like_try_qpl' %!in% c('Heard about the language', 'Is part of a course about the language', 'Read an article about the language', 'Widely used', 'Other features')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + why_like_try_qpl, data=agg, FUN=length)
-make_bar_plot(agg, x='why_like_try_qpl', FALSE)
+make_bar_plot(agg, x='why_like_try_qpl', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='why_like_try_qpl', FALSE)
 remove(agg)
 
@@ -439,8 +433,6 @@ remove(agg)
 #
 # What tools do you use to test your Quantum Programs?
 #
-# FIXME Y axis labels - too large
-# FIXME X axis scale in percentage and values (percentage)
 plot_label('What tools do you use to test your Quantum Programs?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(tools_test, sep=';'))
@@ -465,7 +457,7 @@ pretty_testing_tools_names <- function(testing_tool_name) {
   return(gsub(" \\(.*\\)$", '', testing_tool_name))
 }
 agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_testing_tools_names)
-make_bar_plot(agg, x='tools_test', FALSE)
+make_bar_plot(agg, x='tools_test', TRUE, length(unique(agg$timestamp)))
 #make_pie_plot(agg, fill='tools_test', FALSE)
 remove(agg)
 
