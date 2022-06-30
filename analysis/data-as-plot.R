@@ -234,7 +234,7 @@ remove(agg)
 plot_label('Which of the following best describes the highest level\nof education that you have completed?')
 agg <- aggregate(x=country ~ timestamp + level_education, data=df, FUN=length)
 pretty_level_education_names <- function(level_education_name) {
-  return(gsub('Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.) ', 'Secondary school', level_education_name))
+  return(gsub("Secondary school \\(.*\\)$", 'Secondary school', level_education_name))
 }
 agg$'level_education' <- sapply(agg$'level_education', pretty_level_education_names)
 make_bar_plot(agg, x='level_education', TRUE, length(unique(agg$timestamp)))
