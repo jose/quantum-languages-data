@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------
-# This script plots correlation plot.
+# This script plots relation plot.
 #
 # Usage:
-#   Rscript correlation-plot.R
-#     <output pdf file, e.g., correlation-plot.pdf>
+#   Rscript relation-plot.R
+#     <output pdf file, e.g., relation-plot.pdf>
 # ------------------------------------------------------------------------------
 
 source('utils.R')
@@ -17,7 +17,7 @@ library('RColorBrewer')
 
 args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 1) {
-  stop('USAGE: Rscript correlation-plot.R <output pdf file, e.g., correlation-plot.pdf>')
+  stop('USAGE: Rscript relation-plot.R <output pdf file, e.g., relation-plot.pdf>')
 }
 
 # Args
@@ -42,7 +42,33 @@ dfOpenQuestions <- dfOpenQuestions[dfOpenQuestions$'used_qpl' == 'Yes', ]
 unlink(OUTPUT_FILE)
 pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
 # Add a cover page to the output file
-plot_label('Correlation plots')
+plot_label('Relations plots')
+
+make_barplot <- function(agg, x, fill, position, legPosition, xLabel, legend) {
+  # Basic barplot
+  p <- ggplot(agg, aes(x=get(x), fill=get(fill)))
+  # Basic barplot
+  p <- p + geom_bar(position=position) 
+  if(position=='fill'){
+    # Add labels in the bars
+    p <- p + stat_count(geom='text', colour='black', size=4, aes(label=paste((round((..count..)/tapply(..count.., ..x.., sum)[as.character(..x..)]*100, digit=2)), "%", sep="")), position=position_fill(.5))
+    # Change y axis label
+    p <- p + scale_y_continuous(name='', labels = scales::percent)
+  } else {
+    # Add labels in the bars
+    p <- p + stat_count(geom='text', colour='black', size=4, aes(label=..count..), position=position_stack(.5))
+    # Change y axis label
+    p <- p + scale_y_continuous(name='# of participants')
+  }
+  # Change legend position
+  p <- p + theme(legend.position=legPosition) 
+  # Change legend title
+  p <- p + labs(fill=legend)
+  # Change x axis label
+  p <- p + scale_x_discrete(name=xLabel)
+  # Plot it
+  print(p)
+}
 
 make_barplot_proptable <- function(tab, xlab) {
   # Barplot with prop table
@@ -52,65 +78,11 @@ make_barplot_proptable <- function(tab, xlab) {
 }
 
 make_barplot_table <- function(tab, xlab, beside) {
-  # Save current graphical parameters
-  #opar <- par(no.readonly = TRUE)
-  # Increase margin size (the first is the bottom margin)
-  #par(mar=c(11,4,4,4))
-  #par(mai = c(1.5, 1.5, 1.5, 1.5)) #increase margin
-  #par(oma = c(4, 4, 4, 4)) # Outer margins
   # Barplot with table
   p <- barplot(tab, legend.text=TRUE, beside=beside, main='', xlab=xlab, ylab='# of participants', las=2)
   # Plot it
   print(p)
-  # Back to the default graphical parameters
-  #on.exit(par(opar))
 }
-
-make_correlation_plot_example <- function() {
-  plot_label('Correlation Plot Example')
-  my_data <- mtcars
-  head(my_data)
-  cor_coefs <- cor.test(my_data$mpg, my_data$wt)
-  p <- ggplot(data = my_data, aes(x = mpg, y = wt)) + 
-    geom_point() +
-    geom_smooth(method=lm , color="red", fill="#69b3a2", se=TRUE) +
-    annotate("text", x = 30, y = 4, label = paste0("R: ", round(cor_coefs$estimate, 2))) +
-    annotate("text", x = 30, y = 3.5, label = paste0("p-value: ", round(cor_coefs$p.value, 10)))
-  print(p)
-}
-
-print_aggregation_example <- function(agg){
-  print('Aggregation')
-  agg1 <- aggregate(agg$timestamp, by=list(agg$gender, agg$age), FUN=length)
-  colnames(agg1) <- c('gender', 'age', 'count')
-  print(agg1)
-}
-
-print_table_example <- function(agg){
-  print("Table")
-  tab <- table(agg$age, agg$gender)
-  dfTab <- as.data.frame.matrix(tab) 
-  #print(tab[,'Prefer not to say'])
-  print(dfTab)
-}
-
-print_matrix_example <- function(agg){
-  print("Matrix")
-  genderList <- c('Man', 'Woman', 'Non-binary, genderqueer, or gender non-conforming', 'Prefer not to say')
-  ageList <- c('Under 18 years old', '18-24 years old', '25-34 years old', '35-44 years old', '45-54 years old', '55-64 years old', '65 years or older', 'Prefer not to say')
-  mat <- matrix(, nrow=8, ncol=4, byrow=TRUE)
-  rownames(mat) <- ageList
-  colnames(mat) <- genderList
-  for (g in genderList){
-    for (a in ageList){
-      n <- nrow(agg[(agg$gender == g) & (agg$age == a), ])
-      mat[a,g] <- n
-    }
-  }
-  print(mat)
-}
-
-#make_correlation_plot_example()
 
 #
 # Relation between Age and Educutaion Level of the participants
@@ -119,8 +91,10 @@ plot_label('Relation between Age and Education level of the participants')
 agg <- aggregate(x=country ~ timestamp + age + level_education, data=df, FUN=length)
 tab <- table(agg$level_education, agg$age)
 make_barplot_proptable(tab, "Age")
+make_barplot(agg, 'age', 'level_education', 'fill', 'right', 'Age', 'Level of education')
+make_barplot(agg, 'age', 'level_education', 'stack', 'right', 'Age', 'Level of education')
 make_barplot_table(tab, "Age", FALSE)
-make_barplot_table(tab, "Age", TRUE)
+#make_barplot_table(tab, "Age", TRUE)
 remove(tab)
 remove(agg)
 
@@ -221,7 +195,7 @@ remove(agg)
 plot_label('Relation between primary QPL/framework and the \neducation level of the participant')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + level_education, data=df, FUN=length)
 pretty_level_education_names <- function(level_education_name) {
-  return(gsub('Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.) ', 'Secondary school', level_education_name))
+  return(gsub("Secondary school \\(.*\\)$", 'Secondary school', level_education_name))
 }
 agg$'level_education' <- sapply(agg$'level_education', pretty_level_education_names)
 tab <- table(agg$level_education, agg$primary_qpl)
