@@ -38,11 +38,16 @@ make_bar_plot <- function(df, x, lblPercentual, total) {
   p <- ggplot(df, aes_string(x=x)) + geom_bar(width=0.90)
   # Change x axis label
   p <- p + scale_x_discrete(name='')
-  # Change y axis label
   if(lblPercentual == TRUE){
+    # Change y axis label
     p <- p + scale_y_continuous(name='% respondents', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
+    # Add labels over bars
+    p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   } else {   
-      p <- p + scale_y_continuous(name='# Number of respondents')
+    # Change y axis label
+    p <- p + scale_y_continuous(name='# Number of respondents')
+    # Add labels over bars
+    p <- p + stat_count(geom='text', colour='black', size=6, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   }
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='none',
@@ -51,12 +56,6 @@ make_bar_plot <- function(df, x, lblPercentual, total) {
     axis.title.x=element_text(size=18, hjust=0.5, vjust=0.0),
     axis.title.y=element_text(size=18, hjust=0.5, vjust=0.5)
   )
-  # Add labels over bars
-  if(lblPercentual == TRUE){
-     p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
-  } else {   
-   p <- p + stat_count(geom='text', colour='black', size=6, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
-  }
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
@@ -102,11 +101,16 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
   # Change x axis label
   p <- p + scale_x_discrete(name='')
-  # Change y axis label
   if(lblPercentual == TRUE){
+    # Change y axis label
     p <- p + scale_y_continuous(name='% respondents', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
+    # Add labels over bars
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   } else {   
-      p <- p + scale_y_continuous(name='# Number of respondents')
+    # Change y axis label
+    p <- p + scale_y_continuous(name='# Number of respondents')
+    # Add labels over bars
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   }
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='top',
@@ -118,12 +122,6 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   )
   # Change legend's title
   p <- p + labs(fill='')
-  # Add labels over bars
-  if(lblPercentual == TRUE){
-    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
-  } else {   
-    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
-  }
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
