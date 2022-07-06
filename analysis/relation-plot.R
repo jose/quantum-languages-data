@@ -85,8 +85,8 @@ agg <- aggregate(x=country ~ timestamp + age + level_education, data=df, FUN=len
 #  return(gsub("Secondary school \\(.*\\)$", 'Secondary school', level_education_name))
 #}
 agg$'level_education' <- sapply(agg$'level_education', pretty_names_remove_parentheses)
-make_barplot(agg, 'age', 'level_education', 'fill', 'top', 'Age', '')
-make_barplot(agg, 'age', 'level_education', 'stack', 'top', 'Age', '')
+make_barplot(agg, 'age', 'level_education', 'fill', 'top', 'age of the participants', '')
+make_barplot(agg, 'age', 'level_education', 'stack', 'top', 'rage of the participants', '')
 remove(agg)
 
 #
