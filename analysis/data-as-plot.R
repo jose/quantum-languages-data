@@ -40,12 +40,12 @@ make_bar_plot <- function(df, x, lblPercentual, total) {
   p <- p + scale_x_discrete(name='')
   if(lblPercentual == TRUE){
     # Change y axis label
-    p <- p + scale_y_continuous(name='% respondents', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
+    p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
     # Add labels over bars
     p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   } else {   
     # Change y axis label
-    p <- p + scale_y_continuous(name='# Number of respondents')
+    p <- p + scale_y_continuous(name='# Number of participants')
     # Add labels over bars
     p <- p + stat_count(geom='text', colour='black', size=6, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   }
@@ -103,12 +103,12 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   p <- p + scale_x_discrete(name='')
   if(lblPercentual == TRUE){
     # Change y axis label
-    p <- p + scale_y_continuous(name='% respondents', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
+    p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
     # Add labels over bars
     p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
   } else {   
     # Change y axis label
-    p <- p + scale_y_continuous(name='# Number of respondents')
+    p <- p + scale_y_continuous(name='# Number of participants')
     # Add labels over bars
     p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=..count..), position=position_dodge(width=0.9), hjust=-0.15)
   }

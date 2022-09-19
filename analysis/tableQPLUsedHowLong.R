@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # This script print out a latex table with the number of participants using a
-# quantum programming language / framework and how long.
+# quantum programming language and how long.
 #
 # Usage:
 #   Rscript tableQPLUsedHowLong.R
@@ -37,7 +37,7 @@ sink(OUTPUT_FILE, append=FALSE, split=TRUE)
 
 # Write down the table header
 cat('\\begin{tabular}{@{\\extracolsep{\\fill}} p{2.5cm}rrrrrrrr} \\toprule\n', sep='')
-cat('\\multicolumn{1}{c}{QPLs / frameworks} & \\multicolumn{1}{c}{Less than 1 year} & \\multicolumn{1}{c}{1 to 2 years} & \\multicolumn{1}{c}{3 to 4 years} & \\multicolumn{1}{c}{5 to 6 years} & \\multicolumn{1}{c}{7 to 8 years} & \\multicolumn{1}{c}{9 to 10 years} & \\multicolumn{1}{c}{More than 11 years} & \\multicolumn{1}{c}{Total} \\\\ \n', sep='')
+cat('\\multicolumn{1}{c}{QPLs} & \\multicolumn{1}{c}{Less than 1 year} & \\multicolumn{1}{c}{1 to 2 years} & \\multicolumn{1}{c}{3 to 4 years} & \\multicolumn{1}{c}{5 to 6 years} & \\multicolumn{1}{c}{7 to 8 years} & \\multicolumn{1}{c}{9 to 10 years} & \\multicolumn{1}{c}{More than 11 years} & \\multicolumn{1}{c}{Total} \\\\ \n', sep='')
 cat('\\midrule \n', sep='')
 
 # Content
