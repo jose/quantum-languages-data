@@ -171,6 +171,9 @@ pre_process_data <- function(df) {
   df$'rate_primary_qpl' <- as.factor(df$'rate_primary_qpl')
   df$'rate_primary_qpl_value' <- as.factor(df$'rate_primary_qpl_value')
 
+  df$'primary_qpl' <- sapply(df$'primary_qpl', pretty_qpl)
+  df$'primary_qpl' <- factor(df$'primary_qpl', levels=c(stringr::str_sort(setdiff(unique(df$'primary_qpl'), c('Other'))), 'Other'))
+
   # used_qpls_*
   #
   all_colnames               <- colnames(df)
@@ -271,11 +274,11 @@ pre_process_data <- function(df) {
   # (custom) Sort age
   df$'age' <- factor(df$'age', levels=c(
     'Under 18 years old',
-    '18−24 years old',
-    '25−34 years old',
-    '35−44 years old',
-    '45−54 years old',
-    '55−64 years old',
+    '18-24 years old',
+    '25-34 years old',
+    '35-44 years old',
+    '45-54 years old',
+    '55-64 years old',
     '65 years or older',
     'Prefer not to say'
   ))
@@ -326,6 +329,95 @@ pre_process_data <- function(df) {
   df$'used_qpls_value' <- factor(df$'used_qpls_value', levels=used_qpls_years_levels)
 
   return(df)
+}
+
+#
+#
+#
+pretty_qpl <- function(qpl) {
+  if (qpl == 'Blackbird') {
+    return('Strawberry Fields (Blackbird)')
+  } else if (qpl == 'Braket SDK') {
+    return('Braket SDK (Python)')
+  } else if (qpl == 'Cirq') {
+    return('Cirq (Python)')
+  } else if (qpl == 'Cove') {
+    return('Cove (C#)')
+  } else if (qpl == 'cQASM') {
+    return('cQASM')
+  } else if (qpl == 'CQP (Communication Quantum Processes)') {
+    return('CQP')
+  } else if (qpl == 'Forest') {
+    return('Forest (Python)')
+  } else if (qpl == 'Ket') {
+    return('Ket')
+  } else if (qpl == 'LanQ') {
+    return('LanQ')
+  } else if (qpl == 'LIQUi|>') {
+    return('LIQUi|>')
+  } else if (qpl == 'NDQFP') {
+    return('NDQFP')
+  } else if (qpl == 'NDQJava') {
+    return('NDQJava')
+  } else if (qpl == 'Ocean Software') {
+    return('DWave Ocean (Python)')
+  } else if (qpl == 'OpenQASM') {
+    return('OpenQASM')
+  } else if (qpl == 'Orquestra') {
+    return('Orquestra (Python)')
+  } else if (qpl == 'ProjectQ') {
+    return('ProjectQ (Python)')
+  } else if (qpl == 'Q Language') {
+    return('Q Language')
+  } else if (qpl == 'QASM (Quantum Macro Assembler)') {
+    return('QASM')
+  } else if (qpl == 'QCL (Quantum Computation Language)') {
+    return('QCL')
+  } else if (qpl == 'QDK (Quantum Development Kit)') {
+    return('QDK (Python)')
+  } else if (qpl == 'QHAL') {
+    return('QHAL')
+  } else if (qpl == 'Qiskit') {
+    return('Qiskit (Python)')
+  } else if (qpl == 'qGCL') {
+    return('qGCL')
+  } else if (qpl == 'QHaskell') {
+    return('QHaskell')
+  } else if (qpl == 'QML') {
+    return('QML')
+  } else if (qpl == 'QPAlg (Quantum Process Algebra)') {
+    return('QPAlg')
+  } else if (qpl == 'QPL and QFC') {
+    return('QPL and QFC')
+  } else if (qpl == 'QSEL') {
+    return('QSEL')
+  } else if (qpl == 'QuaFL (DSL for quantum programming)') {
+    return('QuaFL')
+  } else if (qpl == 'Quil') {
+    return('Quil')
+  } else if (qpl == 'Quipper') {
+    return('Quipper')
+  } else if (qpl == 'Q#') {
+    return('QDK (Q#)')
+  } else if (qpl == 'Q|SI>') {
+    return('Q|SI>')
+  } else if (qpl == "Sabry's Language") {
+    return('Sabry Language')
+  } else if (qpl == 'Scaffold') {
+    return('Scaffold')
+  } else if (qpl == 'Silq') {
+    return('Silq')
+  } else if (qpl == 'Strawberry Fields') {
+    return('Strawberry Fields (Python)')
+  } else if (qpl == 'Lambda Calculi') {
+    return('Lambda Calculi')
+  } else if (qpl == 'Other (Language informed in the previous question)') {
+    return('Other')
+  } else if (qpl == '') {
+    return('')
+  } else {
+    return('Other')
+  }
 }
 
 # EOF
