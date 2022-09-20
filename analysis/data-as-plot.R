@@ -35,15 +35,15 @@ plot_label('Data as pieplots and barplots')
 
 make_bar_plot <- function(df, x, lblPercentual, total) {
   # Basic barplot
-  p <- ggplot(df, aes_string(x=x)) + geom_bar(width=0.90)
+  p <- ggplot(df, aes(x=get(x))) + geom_bar(width=0.90)
   # Change x axis label
-  p <- p + scale_x_discrete(name='')
-  if(lblPercentual == TRUE){
+  p <- p + scale_x_discrete(name='', drop=FALSE)
+  if (lblPercentual == TRUE) {
     # Change y axis label
     p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
     # Add labels over bars
-    p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
-  } else {   
+    p <- p + stat_count(geom='text', colour='black', size=6, aes(label=paste((round((..count..)/total*100, digit=1)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
+  } else {
     # Change y axis label
     p <- p + scale_y_continuous(name='# Number of participants')
     # Add labels over bars
@@ -51,8 +51,8 @@ make_bar_plot <- function(df, x, lblPercentual, total) {
   }
   # Remove legend's title and increase size of [x-y]axis labels
   p <- p + theme(legend.position='none',
-    axis.text.x=element_text(size=18,  hjust=0.5, vjust=0.5),
-    axis.text.y=element_text(size=18,  hjust=1.0, vjust=0.0),
+    axis.text.x=element_text(size=16,  hjust=0.5, vjust=0.5),
+    axis.text.y=element_text(size=16,  hjust=1.0, vjust=0.0),
     axis.title.x=element_text(size=18, hjust=0.5, vjust=0.0),
     axis.title.y=element_text(size=18, hjust=0.5, vjust=0.5)
   )
@@ -68,9 +68,9 @@ make_pie_plot <- function(df, fill, lblPercentual, lblSize) {
   # Create pie-chart plot
   p <- p + coord_polar('y', start=0)
   # Add text to each slice
-  if(lblPercentual == TRUE){
-    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/sum(..count..)*100, digit=2)), "%", sep="")), position=position_stack(vjust=0.5))
-  } else {   
+  if (lblPercentual == TRUE) {
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/sum(..count..)*100, digit=1)), "%", sep="")), position=position_stack(vjust=0.5))
+  } else {
     p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=..count..), position=position_stack(vjust=0.5))
   }
   # Create a customized blank theme
@@ -88,7 +88,8 @@ make_pie_plot <- function(df, fill, lblPercentual, lblSize) {
     plot.background = element_blank()
   )
   # Remove legend's title
-  p <- p + labs(fill='')
+  # p <- p + labs(fill='')
+  p <- p + scale_fill_discrete(name='', drop=FALSE)
   # Use grey scale color palette
   # p <- p + scale_fill_grey()
   # Plot it
@@ -100,13 +101,13 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   p <- ggplot(df, aes(x=get(x), fill=get(fill)))
   p <- p + geom_bar(width=0.90, position=position_dodge(width=1))
   # Change x axis label
-  p <- p + scale_x_discrete(name='')
-  if(lblPercentual == TRUE){
+  p <- p + scale_x_discrete(name='', drop=FALSE)
+  if (lblPercentual == TRUE) {
     # Change y axis label
     p <- p + scale_y_continuous(name='% participants', labels = function(x) paste0(round(x/total*100,0), "%"), breaks = seq(0, total, total*0.1), expand = expansion(mult = c(0, .2)))
     # Add labels over bars
-    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=2)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
-  } else {   
+    p <- p + stat_count(geom='text', colour='black', size=lblSize, aes(label=paste((round((..count..)/total*100, digit=1)), "%", sep="")), position=position_dodge(width=0.9), hjust=-0.15)
+  } else {
     # Change y axis label
     p <- p + scale_y_continuous(name='# Number of participants')
     # Add labels over bars
@@ -117,11 +118,12 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
     legend.text = element_text(size=16),
     axis.text.x=element_text(size=16,  hjust=0.5, vjust=0.5),
     axis.text.y=element_text(size=16,  hjust=1.0, vjust=0.0),
-    axis.title.x=element_text(size=16, hjust=0.5, vjust=0.0),
-    axis.title.y=element_text(size=16, hjust=0.5, vjust=0.5)
+    axis.title.x=element_text(size=18, hjust=0.5, vjust=0.0),
+    axis.title.y=element_text(size=18, hjust=0.5, vjust=0.5)
   )
   # Change legend's title
-  p <- p + labs(fill='')
+  # p <- p + labs(fill='')
+  p <- p + scale_fill_discrete(name='', drop=FALSE)
   # Make it horizontal
   p <- p + coord_flip()
   # Plot it
@@ -191,6 +193,8 @@ agg <- as.data.frame(df %>% separate_rows(learned_code, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_code'[agg$'learned_code' %!in% c('Books / Physical media', 'Coding Bootcamp', 'Colleague', 'Friend or family member', 'Online Courses or Certification', 'Online Forum', 'Other online resources (videos, blogs, etc)', 'School')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_code, data=agg, FUN=length)
+# (custom) sort
+agg$'learned_code' <- factor(agg$'learned_code', levels=c(stringr::str_sort(setdiff(unique(agg$'learned_code'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='learned_code', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -203,6 +207,8 @@ agg <- as.data.frame(df %>% separate_rows(used_programming_language, sep=';'))
 # Replace open-answers with 'Other'
 agg$'used_programming_language'[agg$'used_programming_language' %!in% c('Assembly', 'Bash', 'C', 'Classic Visual Basic', 'COBOL', 'C++', 'C#', 'Delphi/Object Pascal', 'Fortran', 'F#', 'Go', 'Groovy', 'Haskell', 'Java', 'JavaScrpit', 'Julia', 'Lisp', 'Matlab', 'ML', 'Objective-C', 'Pascal', 'Perl', 'pGCL', 'PHP', 'PowerShell', 'Prolog', 'Python', 'Ruby', 'SQL', 'Standard ML', 'Swift', 'Visual Basic', 'Visual C++')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + used_programming_language, data=agg, FUN=length)
+# (custom) sort
+agg$'used_programming_language' <- factor(agg$'used_programming_language', levels=c(stringr::str_sort(setdiff(unique(agg$'used_programming_language'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='used_programming_language', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -225,6 +231,8 @@ agg <- agg[agg$'learned_quantum_physics' != '', ]
 # Replace open-answers with 'Other'
 agg$'learned_quantum_physics'[agg$'learned_quantum_physics' %!in% c('Books', 'Online Course', 'Search Sites', 'University', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_quantum_physics, data=agg, FUN=length)
+# (custom) sort
+agg$'learned_quantum_physics' <- factor(agg$'learned_quantum_physics', levels=c(stringr::str_sort(setdiff(unique(agg$'learned_quantum_physics'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='learned_quantum_physics', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -251,6 +259,8 @@ agg <- agg[agg$'major' != '', ]
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + major, data=agg, FUN=length)
+# (custom) sort
+agg$'major' <- factor(agg$'major', levels=c(stringr::str_sort(setdiff(unique(agg$'major'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='major', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -263,6 +273,8 @@ agg <- as.data.frame(df %>% separate_rows(job, sep=';'))
 # Replace open-answers with 'Other'
 agg$'job'[agg$'job' %!in% c('Academic researcher', 'Architect', 'Business Analyst', 'CIO / CEO / CTO', 'DBA (Database Administrator)', 'Data Analyst / Data Engineer/ Data Scientist', 'Developer Advocate', 'Developer / Programmer / Software Engineer', 'DevOps Engineer / Infrastructure Developer', 'Instructor / Teacher / Tutor', 'Marketing Manager', 'Product Manager', 'Project Manager', 'Scientist / Researcher', 'Student', 'Systems Analyst', 'Team Lead', 'Technical Support', 'Technical Writer', 'Tester / QA Engineer', 'UX / UI Designer')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + job, data=agg, FUN=length)
+# (custom) sort
+agg$'job' <- factor(agg$'job', levels=c(stringr::str_sort(setdiff(unique(agg$'job'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='job', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -275,6 +287,8 @@ agg <- as.data.frame(df %>% separate_rows(learned_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_qpl'[agg$'learned_qpl' %!in% c('Books', 'Language documentation', 'University', 'Online Course', 'Online Forums', 'Search Sites', 'Work')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + learned_qpl, data=agg, FUN=length)
+# (custom) sort
+agg$'learned_qpl' <- factor(agg$'learned_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'learned_qpl'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='learned_qpl', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -321,7 +335,7 @@ plot_label('In terms of ease, rate your primary Quantum Programming Language.')
 agg <- as.data.frame(df %>% separate_rows(rate_primary_qpl, sep=';'))
 agg <- aggregate(x=country ~ timestamp + rate_primary_qpl + rate_primary_qpl_value + primary_qpl, data=agg, FUN=length)
 agg <- agg[agg$'rate_primary_qpl_value' != '', ]
-agg <- agg[agg$'primary_qpl' == 'Qiskit', ]
+agg <- agg[agg$'primary_qpl' == 'Qiskit (Python)', ]
 make_dodge_plot(agg, 'rate_primary_qpl', 'rate_primary_qpl_value', 4, TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -336,6 +350,8 @@ agg <- agg[agg$'forum' != '', ]
 # Replace open-answers with 'Other'
 agg$'forum'[agg$'forum' %!in% c('Devtalk', 'Quantum Open Source Foundation', 'Slack', 'StackOverflow')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + forum, data=agg, FUN=length)
+# (custom) sort
+agg$'forum' <- factor(agg$'forum', levels=c(stringr::str_sort(setdiff(unique(agg$'forum'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='forum', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -345,8 +361,8 @@ remove(agg)
 plot_label('Which Quantum Programming Languages / frameworks would you \nlike to work or try in the near future?')
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(df %>% separate_rows(qpl_future, sep=';'))
-# Replace open-answers with 'Other'
-agg$'qpl_future'[agg$'qpl_future' %!in% c('Blackbird', 'Braket SDK', 'Cirq', 'Cove', 'cQASM', 'CQP (Communication Quantum Processes)', 'cQPL', 'Forest', 'Ket', 'LanQ', 'LIQUi|>', 'NDQFP', 'NDQJava', 'Ocean Software', 'OpenQASM', 'Orquestra', 'ProjectQ', 'Q Language', 'QASM (Quantum Macro Assembler)', 'QCL (Quantum Computation Language)', 'QDK (Quantum Development Kit)', 'QHAL', 'Qiskit', 'qGCL', 'QHaskell', 'QML', 'QPAlg (Quantum Process Algebra)', 'QPL and QFC', 'QSEL', 'QuaFL (DSL for quantum programming)', 'Quil', 'Quipper', 'Q#', 'Q|SI>', 'Sabry\'s Language', 'Scaffold', 'Silq', 'Strawberry Fields', 'Lambda Calculi')] <- 'Other'
+agg$'qpl_future' <- sapply(agg$'qpl_future', pretty_qpl)
+agg$'qpl_future' <- factor(agg$'qpl_future', levels=c(stringr::str_sort(setdiff(unique(agg$'qpl_future'), c('Other'))), 'Other'))
 agg <- aggregate(x=country ~ timestamp + qpl_future, data=agg, FUN=length)
 make_bar_plot(agg, x='qpl_future', TRUE, length(unique(agg$timestamp)))
 remove(agg)
@@ -360,6 +376,8 @@ agg <- as.data.frame(df %>% separate_rows(why_like_try_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'why_like_try_qpl'[agg$'why_like_try_qpl' %!in% c('Heard about the language', 'Is part of a course about the language', 'Read an article about the language', 'Widely used', 'Other features')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + why_like_try_qpl, data=agg, FUN=length)
+# (custom) sort
+agg$'why_like_try_qpl' <- factor(agg$'why_like_try_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'why_like_try_qpl'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='why_like_try_qpl', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
@@ -372,6 +390,8 @@ agg <- as.data.frame(df %>% separate_rows(how_use_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'how_use_qpl'[agg$'how_use_qpl' %!in% c('Use it for work', 'Use it for research', 'Like to learn')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + how_use_qpl, data=agg, FUN=length)
+# (custom) sort
+agg$'how_use_qpl' <- factor(agg$'how_use_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'how_use_qpl'), c('Other'))), 'Other'))
 make_pie_plot(agg, fill='how_use_qpl', TRUE, 8)
 remove(agg)
 
@@ -394,6 +414,8 @@ agg <- agg[agg$'how_often_test' != '', ]
 # Replace open-answers with 'Other'
 agg$'how_often_test'[agg$'how_often_test' %!in% c('Before go to production', 'Every day', 'Every time you change the code', '')] <- 'Other'
 agg <- aggregate(x=country ~ timestamp + how_often_test, data=agg, FUN=length)
+# (custom) sort
+agg$'how_often_test' <- factor(agg$'how_often_test', levels=c(stringr::str_sort(setdiff(unique(agg$'how_often_test'), c('Other'))), 'Other'))
 make_pie_plot(agg, fill='how_often_test', TRUE, 8)
 remove(agg)
 
@@ -432,6 +454,8 @@ pretty_testing_tools_names <- function(testing_tool_name) {
   return(gsub(" \\(.*\\)$", '', testing_tool_name))
 }
 agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_testing_tools_names)
+# (custom) sort
+agg$'tools_test' <- factor(agg$'tools_test', levels=c(stringr::str_sort(setdiff(unique(agg$'tools_test'), c('Other'))), 'Other'))
 make_bar_plot(agg, x='tools_test', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
