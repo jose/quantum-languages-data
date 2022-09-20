@@ -61,7 +61,8 @@ make_pie_plot <- function(df, fill, lblPercentual) {
     plot.background = element_blank()
   )
   # Remove legend's title
-  p <- p + labs(fill='')
+  # p <- p + labs(fill='')
+  p <- p + scale_fill_discrete(name='', drop=FALSE)
   # Use grey scale color palette
   # p <- p + scale_fill_grey()
   # Plot it
