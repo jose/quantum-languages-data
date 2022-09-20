@@ -270,6 +270,7 @@ pre_process_data <- function(df) {
   df$'used_qpls' <- factor(df$'used_qpls', levels=c(stringr::str_sort(setdiff(unique(df$'used_qpls'), c('Other'))), 'Other'))
 
   # (custom) Sort gender
+  df$'gender'[df$'gender' == ''] <- 'Prefer not to say'
   df$'gender' <- factor(df$'gender', levels=c(stringr::str_sort(setdiff(unique(df$'gender'), c('Prefer not to say'))), 'Prefer not to say'))
   # (custom) Sort age
   df$'age' <- factor(df$'age', levels=c(
