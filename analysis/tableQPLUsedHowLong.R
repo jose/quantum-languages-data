@@ -34,8 +34,8 @@ unlink(OUTPUT_FILE)
 sink(OUTPUT_FILE, append=FALSE, split=TRUE)
 
 # Write down the table header
-cat('\\begin{tabular}{@{\\extracolsep{\\fill}} p{2.5cm}', paste0(rep('r', length(levels(df$'used_qpls_value'))+1), collapse=''), '} \\toprule\n', sep='')
-cat('\\multicolumn{1}{c}{}', sep='')
+cat('\\begin{tabular}{@{\\extracolsep{\\fill}} l', paste0(rep('r', length(levels(df$'used_qpls_value'))+1), collapse=''), '} \\toprule\n', sep='')
+cat('\\multicolumn{1}{c}{Quantum Programming Language}', sep='')
 for (used_qpls_value in levels(df$'used_qpls_value')) {
   cat(' & \\multicolumn{1}{c}{', used_qpls_value, '}', sep='')
 }
