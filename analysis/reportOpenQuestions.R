@@ -92,4 +92,3 @@ dev.off()
 embed_fonts_in_a_pdf(OUTPUT_FILE)
 
 # EOF
-
