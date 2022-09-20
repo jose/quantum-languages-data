@@ -4,6 +4,7 @@
 
 # Load external packages
 library('reshape2')
+library('stringr')
 
 # Environment variables
 RAW_DATA_FILE <- '../data/survey.csv'
@@ -181,21 +182,21 @@ pre_process_data <- function(df) {
   names(df)[names(df) == 'value']    <- 'used_qpls_value'
   pretty_used_qpl <- function(used_qpl) {
     if (used_qpl == 'used_qpls_blackbird') {
-      return('Blackbird')
+      return('Strawberry Fields (Blackbird)')
     } else if (used_qpl == 'used_qpls_braket') {
-      return('Braket SDK')
+      return('Braket SDK (Python)')
     } else if (used_qpl == 'used_qpls_cirq') {
-      return('Cirq')
+      return('Cirq (Python)')
     } else if (used_qpl == 'used_qpls_cove') {
-      return('Cove')
+      return('Cove (C#)')
     } else if (used_qpl == 'used_qpls_cqasm') {
       return('cQASM')
     } else if (used_qpl == 'used_qpls_cqp') {
-      return('CQP (Communication Quantum Processes)')
+      return('CQP') # (Communication Quantum Processes)
     } else if (used_qpl == 'used_qpls_cqpl') {
       return('cQPL')
     } else if (used_qpl == 'used_qpls_forest') {
-      return('Forest')
+      return('Forest (Python)')
     } else if (used_qpl == 'used_qpls_ket') {
       return('Ket')
     } else if (used_qpl == 'used_qpls_lanq') {
@@ -207,25 +208,25 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_ndqjava') {
       return('NDQJava')
     } else if (used_qpl == 'used_qpls_ocean') {
-      return('Ocean Software')
+      return('DWave Ocean (Python)')
     } else if (used_qpl == 'used_qpls_openqasm') {
       return('OpenQASM')
     } else if (used_qpl == 'used_qpls_orquestra') {
-      return('Orquestra')
+      return('Orquestra (Python)')
     } else if (used_qpl == 'used_qpls_projectq') {
-      return('ProjectQ')
+      return('ProjectQ (Python)')
     } else if (used_qpl == 'used_qpls_q_language') {
       return('Q Language')
     } else if (used_qpl == 'used_qpls_qasm') {
-      return('QASM (Quantum Macro Assembler)')
+      return('QASM') # (Quantum Macro Assembler)
     } else if (used_qpl == 'used_qpls_qcl') {
-      return('QCL (Quantum Computation Language)')
+      return('QCL') # (Quantum Computation Language)
     } else if (used_qpl == 'used_qpls_qdk') {
-      return('QDK (Quantum Development Kit)')
+      return('QDK (Python)')
     } else if (used_qpl == 'used_qpls_qhal') {
       return('QHAL')
     } else if (used_qpl == 'used_qpls_qiskit') {
-      return('Qiskit')
+      return('Qiskit (Python)')
     } else if (used_qpl == 'used_qpls_qgcl') {
       return('qGCL')
     } else if (used_qpl == 'used_qpls_qhaskell') {
@@ -233,19 +234,19 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_qml') {
       return('QML')
     } else if (used_qpl == 'used_qpls_qpalg') {
-      return('QPAlg (Quantum Process Algebra)')
+      return('QPAlg') # (Quantum Process Algebra)
     } else if (used_qpl == 'used_qpls_qpl_and_qfc') {
       return('QPL and QFC')
     } else if (used_qpl == 'used_qpls_qsel') {
       return('QSEL')
     } else if (used_qpl == 'used_qpls_quafl') {
-      return('QuaFL (DSL for quantum programming)')
+      return('QuaFL') # (DSL for quantum programming)
     } else if (used_qpl == 'used_qpls_quil') {
       return('Quil')
     } else if (used_qpl == 'used_qpls_quipper') {
       return('Quipper')
     } else if (used_qpl == 'used_qpls_q') {
-      return('Q#')
+      return('QDK (Q#)')
     } else if (used_qpl == 'used_qpls_qsi') {
       return('Q|SI>')
     } else if (used_qpl == 'used_qpls_sabry') {
@@ -255,7 +256,7 @@ pre_process_data <- function(df) {
     } else if (used_qpl == 'used_qpls_silq') {
       return('Silq')
     } else if (used_qpl == 'used_qpls_strawberry') {
-      return('Strawberry Fields')
+      return('Strawberry Fields (Python)')
     } else if (used_qpl == 'used_qpls_lambda_calculi') {
       return('Lambda Calculi')
     } else if (used_qpl == 'used_qpls_other') {
@@ -263,7 +264,66 @@ pre_process_data <- function(df) {
     }
   }
   df$'used_qpls' <- sapply(df$'used_qpls', pretty_used_qpl)
-  df$'used_qpls' <- as.factor(df$'used_qpls')
+  df$'used_qpls' <- factor(df$'used_qpls', levels=c(stringr::str_sort(setdiff(unique(df$'used_qpls'), c('Other'))), 'Other'))
+
+  # (custom) Sort gender
+  df$'gender' <- factor(df$'gender', levels=c(stringr::str_sort(setdiff(unique(df$'gender'), c('Prefer not to say'))), 'Prefer not to say'))
+  # (custom) Sort age
+  df$'age' <- factor(df$'age', levels=c(
+    'Under 18 years old',
+    '18−24 years old',
+    '25−34 years old',
+    '35−44 years old',
+    '45−54 years old',
+    '55−64 years old',
+    '65 years or older',
+    'Prefer not to say'
+  ))
+  # (custom) Sort learned_code
+  df$'learned_code' <- factor(df$'learned_code', levels=c(stringr::str_sort(setdiff(unique(df$'learned_code'), c('Other'))), 'Other'))
+  # (custom) Sort learned_quantum_physics
+  df$'learned_quantum_physics' <- factor(df$'learned_quantum_physics', levels=c(stringr::str_sort(setdiff(unique(df$'learned_quantum_physics'), c('Other'))), 'Other'))
+  # (custom) Sort forum
+  df$'forum' <- factor(df$'forum', levels=c(stringr::str_sort(setdiff(unique(df$'forum'), c('Other'))), 'Other'))
+  # (custom) Sort major
+  df$'major' <- factor(df$'major', levels=c(stringr::str_sort(setdiff(unique(df$'major'), c('Other'))), 'Other'))
+  # (custom) Sort job
+  df$'job' <- factor(df$'job', levels=c(stringr::str_sort(setdiff(unique(df$'job'), c('Other'))), 'Other'))
+  # (custom) Sort how_use_qpl
+  df$'how_use_qpl' <- factor(df$'how_use_qpl', levels=c(stringr::str_sort(setdiff(unique(df$'how_use_qpl'), c('Other'))), 'Other'))
+  # (custom) Sort how_often_test
+  df$'how_often_test' <- factor(df$'how_often_test', levels=c(stringr::str_sort(setdiff(unique(df$'how_often_test'), c('Other'))), 'Other'))
+
+  # (custom) Sort range of years
+  years_levels <- c(
+    'Less than 1 year',
+    '1 to 4 years',
+    '5 to 9 years',
+    '10 to 14 years',
+    '15 to 19 years',
+    '20 to 24 years',
+    '25 to 29 years',
+    '30 to 34 years',
+    '35 to 39 years',
+    '40 to 44 years',
+    '45 to 49 years',
+    'More than 50 years'
+  )
+  df$'years_coding'                    <- factor(df$'years_coding', levels=years_levels)
+  df$'years_coded_professionally'      <- factor(df$'years_coded_professionally', levels=years_levels)
+  df$'years_coded_qpls'                <- factor(df$'years_coded_qpls', levels=years_levels)
+  df$'years_coded_professionally_qpls' <- factor(df$'years_coded_professionally_qpls', levels=years_levels)
+
+  used_qpls_years_levels <- c(
+    'Less than 1 year',
+    '1 to 2 years',
+    '3 to 4 years',
+    '5 to 6 years',
+    '7 to 8 years',
+    '9 to 10 years',
+    'More then 11 years'
+  )
+  df$'used_qpls_value' <- factor(df$'used_qpls_value', levels=used_qpls_years_levels)
 
   return(df)
 }
