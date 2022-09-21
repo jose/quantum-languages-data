@@ -313,10 +313,25 @@ pre_process_data <- function(df) {
     '45 to 49 years',
     'More than 50 years'
   )
+    years_levels_none <- c(
+    'None',
+    'Less than 1 year',
+    '1 to 4 years',
+    '5 to 9 years',
+    '10 to 14 years',
+    '15 to 19 years',
+    '20 to 24 years',
+    '25 to 29 years',
+    '30 to 34 years',
+    '35 to 39 years',
+    '40 to 44 years',
+    '45 to 49 years',
+    'More than 50 years'
+  )
   df$'years_coding'                    <- factor(df$'years_coding', levels=years_levels)
-  df$'years_coded_professionally'      <- factor(df$'years_coded_professionally', levels=years_levels)
+  df$'years_coded_professionally'      <- factor(df$'years_coded_professionally', levels=years_levels_none)
   df$'years_coded_qpls'                <- factor(df$'years_coded_qpls', levels=years_levels)
-  df$'years_coded_professionally_qpls' <- factor(df$'years_coded_professionally_qpls', levels=years_levels)
+  df$'years_coded_professionally_qpls' <- factor(df$'years_coded_professionally_qpls', levels=years_levels_none)
 
   used_qpls_years_levels <- c(
     'Less than 1 year',
