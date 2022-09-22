@@ -22,9 +22,9 @@ load_TABLE <- function(zip_path) {
   return(read.table(gzfile(zip_path), header=TRUE, stringsAsFactors=FALSE))
 }
 
-load_survey_data <- function() {
+load_survey_data <- function(only_used_qpl=TRUE) {
   df <- load_CSV(RAW_DATA_FILE)
-  df <- pre_process_data(df)
+  df <- pre_process_data(df, only_used_qpl)
   return(df)
 }
 
@@ -54,7 +54,7 @@ plot_label <- function(text) {
 #
 # Pre-process the data collected from google forms
 #
-pre_process_data <- function(df) {
+pre_process_data <- function(df, only_used_qpl=TRUE) {
   #
   # Rename all columns
   #
@@ -141,7 +141,9 @@ pre_process_data <- function(df) {
 
   # Filter out the ones that have not used any QP language, as those have not
   # completed the survey
-  df <- df[df$'used_qpl' == 'Yes', ]
+  if (only_used_qpl) {
+    df <- df[df$'used_qpl' == 'Yes', ]
+  }
 
   #
   # Convert dataframe from wide to long (column level)

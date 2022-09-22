@@ -121,14 +121,14 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   print(p)
 }
 
-# Load data
-df <- load_survey_data()
-
 # Set output file to a PDF
 unlink(OUTPUT_FILE)
 pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
 # Add a cover page to the output file
 plot_label('Data as pieplots and barplots')
+
+# Load data
+df <- load_survey_data(only_used_qpl=FALSE)
 
 #
 # Have you ever used any Quantum Programming Language?
@@ -139,6 +139,9 @@ agg$'count' <- 1
 agg         <- aggregate(x=count ~ timestamp + used_qpl, data=agg, FUN=sum)
 make_pie_plot(agg, fill='used_qpl', TRUE, 8)
 remove(agg)
+
+# Load data
+df <- load_survey_data()
 
 #
 # What is your age?
