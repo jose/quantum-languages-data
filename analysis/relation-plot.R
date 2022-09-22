@@ -28,10 +28,6 @@ OUTPUT_FILE <- args[1]
 # Load data
 df <- load_survey_data()
 
-# Filter out the ones that have not used any QP language, as those have not
-# completed the survey
-df <- df[df$'used_qpl' == 'Yes', ]
-
 # Load data
 dfOpenQuestions <- load_CSV(OPEN_QUESTIONS_DATA_FILE)
 # Filter out the ones that have not used any QP language, as those have not

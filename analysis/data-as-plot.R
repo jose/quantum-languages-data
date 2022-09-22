@@ -24,15 +24,6 @@ OUTPUT_FILE <- args[1]
 
 # ------------------------------------------------------------------------- Main
 
-# Load data
-df <- load_survey_data()
-
-# Set output file to a PDF
-unlink(OUTPUT_FILE)
-pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
-# Add a cover page to the output file
-plot_label('Data as pieplots and barplots')
-
 make_bar_plot <- function(df, x, lblPercentual, total) {
   # Basic barplot
   p <- ggplot(df, aes(x=get(x))) + geom_bar(width=0.90)
@@ -130,6 +121,15 @@ make_dodge_plot <- function(df, x, fill, lblSize, lblPercentual, total) {
   print(p)
 }
 
+# Load data
+df <- load_survey_data()
+
+# Set output file to a PDF
+unlink(OUTPUT_FILE)
+pdf(file=OUTPUT_FILE, family='Helvetica', width=14, height=12)
+# Add a cover page to the output file
+plot_label('Data as pieplots and barplots')
+
 #
 # Have you ever used any Quantum Programming Language?
 #
@@ -139,10 +139,6 @@ agg$'count' <- 1
 agg         <- aggregate(x=count ~ timestamp + used_qpl, data=agg, FUN=sum)
 make_pie_plot(agg, fill='used_qpl', TRUE, 8)
 remove(agg)
-
-# Filter out the ones that have not used any QP language, as those have not
-# completed the survey
-df <- df[df$'used_qpl' == 'Yes', ]
 
 #
 # What is your age?

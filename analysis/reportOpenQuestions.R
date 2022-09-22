@@ -25,9 +25,6 @@ OUTPUT_FILE <- args[1]
 
 # Load data
 df <- load_CSV(OPEN_QUESTIONS_DATA_FILE)
-# Filter out the ones that have not used any QP language, as those have not
-# completed the survey
-df <- df[df$'used_qpl' == 'Yes', ]
 # As the dataframe df is organized in long format we first need to group data
 df <- aggregate(x=. ~ timestamp + why_too_many_qpl_resp + why_need_another_qpl_resp, data=df, FUN=length)
 

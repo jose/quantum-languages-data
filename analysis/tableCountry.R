@@ -23,10 +23,6 @@ OUTPUT_FILE <- args[1]
 # Import data file
 df <- load_survey_data()
 
-# Filter out the ones that have not used any QP language, as those have not
-# completed the survey
-df <- df[df$'used_qpl' == 'Yes', ]
-
 # Remove the output file if any
 unlink(OUTPUT_FILE)
 sink(OUTPUT_FILE, append=FALSE, split=TRUE)

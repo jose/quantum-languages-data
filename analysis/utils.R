@@ -139,6 +139,10 @@ pre_process_data <- function(df) {
   names(df)[names(df) == 'In.your.opinion..do.you.think.there.are.too.many.or.too.few.Quantum.Programming.Languages..Why.'] <- 'why_too_many_qpl'
   names(df)[names(df) == 'In.your.opinion..do.you.think.that.quantum.developers.would.need.yet.another.Quantum.Programming.Languages.in.the.near.future..Why.'] <- 'why_need_another_qpl'
 
+  # Filter out the ones that have not used any QP language, as those have not
+  # completed the survey
+  df <- df[df$'used_qpl' == 'Yes', ]
+
   #
   # Convert dataframe from wide to long (column level)
   #
