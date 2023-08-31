@@ -296,7 +296,7 @@ remove(agg)
 #
 plot_label('How many years have you been coding using Quantum \nProgramming Languages?')
 agg <- aggregate(x=country ~ timestamp + years_coded_qpls, data=df, FUN=length)
-make_pie_plot(agg, fill='years_coded_qpls', TRUE, 5)
+make_bar_plot(agg, x='years_coded_qpls', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
 #
@@ -304,7 +304,7 @@ remove(agg)
 #
 plot_label('How many years have you coded professionally using Quantum \nProgramming Languages (as a part of your work)?')
 agg <- aggregate(x=country ~ timestamp + years_coded_professionally_qpls, data=df, FUN=length)
-make_pie_plot(agg, fill='years_coded_professionally_qpls', TRUE, 6)
+make_bar_plot(agg, x='years_coded_professionally_qpls', TRUE, length(unique(agg$timestamp)))
 remove(agg)
 
 #
