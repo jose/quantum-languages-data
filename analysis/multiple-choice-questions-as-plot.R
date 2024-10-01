@@ -132,7 +132,7 @@ make_stack_plot <- function(df, x, fill, lblSize, axisTextSize, lblPercentual, l
   print(p)
 }
 
-make_UpSetR_plot <- function(df, total, height_ratio=1, geom_point_size=2, intersection_y_size=18) {
+make_UpSetR_plot <- function(df, total, height_ratio=1, geom_point_size=2, intersection_y_size=18, min_size=1) {
   up_data <- upset_data(df, colnames(df))
   breaks <- sort(unique(up_data$with_sizes$exclusive_intersection_size), decreasing=TRUE)
   print(breaks)
@@ -144,7 +144,6 @@ make_UpSetR_plot <- function(df, total, height_ratio=1, geom_point_size=2, inter
     width_ratio=0.225,
     # Setting height_ratio=1 will cause the intersection matrix and the intersection size to have an equal height
     height_ratio=height_ratio,
-    # min_size=2,
     # Counts over bars & Total
     base_annotations=list(
       'Intersection size'=intersection_size(
@@ -173,10 +172,11 @@ make_UpSetR_plot <- function(df, total, height_ratio=1, geom_point_size=2, inter
         )
     ),
     #
+    min_size=min_size,
     set_sizes=(
       upset_set_size(
         geom=geom_bar(width=0.70),
-        # filter_intersections=TRUE
+        # filter_intersections=TRUE,
         position='right'
       )
       # Change y axis
@@ -230,7 +230,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'learned_code'))]
 agg <- dcast(agg, ... ~ learned_code, value.var='learned_code', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, total, height_ratio=1.5, geom_point_size=2, intersection_y_size=18)
+make_UpSetR_plot(agg, total, height_ratio=1.5, geom_point_size=2, intersection_y_size=18, min_size=2)
 remove(agg)
 
 # dev.off(); embed_fonts_in_a_pdf(OUTPUT_FILE); stopifnot(TRUE == FALSE) # FIXME remove me
@@ -251,7 +251,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'used_programming_language'))]
 agg <- dcast(agg, ... ~ used_programming_language, value.var='used_programming_language', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, total, height_ratio=2.25, geom_point_size=1, intersection_y_size=18)
+make_UpSetR_plot(agg, total, height_ratio=1.0, geom_point_size=2.0, intersection_y_size=18, min_size=2)
 remove(agg)
 
 #
@@ -312,7 +312,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'job'))]
 agg <- dcast(agg, ... ~ job, value.var='job', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, total, height_ratio=1.25, geom_point_size=2, intersection_y_size=14)
+make_UpSetR_plot(agg, total, height_ratio=0.75, geom_point_size=2.50, intersection_y_size=14, min_size=2)
 remove(agg)
 
 #
@@ -331,7 +331,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'learned_qpl'))]
 agg <- dcast(agg, ... ~ learned_qpl, value.var='learned_qpl', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, total, height_ratio=1.0, geom_point_size=2, intersection_y_size=18)
+make_UpSetR_plot(agg, total, height_ratio=1.0, geom_point_size=2, intersection_y_size=18, min_size=2)
 remove(agg)
 
 #
@@ -396,7 +396,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'qpl_future'))]
 agg <- dcast(agg, ... ~ qpl_future, value.var='qpl_future', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, total, height_ratio=3.0, geom_point_size=1.5, intersection_y_size=14)
+make_UpSetR_plot(agg, total, height_ratio=1.25, geom_point_size=2.75, intersection_y_size=14, min_size=2)
 remove(agg)
 
 #

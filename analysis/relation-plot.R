@@ -101,7 +101,7 @@ make_barplot <- function(agg, x, fill, position, legPosition, xLabel, legVertica
   print(p)
 }
 
-make_UpSetR_plot <- function(df, fill_column, total, height_ratio=1, geom_point_size=2, intersection_y_size=18, legNumRows=1) {
+make_UpSetR_plot <- function(df, fill_column, total, height_ratio=1, geom_point_size=2, intersection_y_size=18, legNumRows=1, min_size=1) {
   data_columns <- names(agg)
   data_columns <- data_columns[data_columns != fill_column]
 
@@ -116,7 +116,6 @@ make_UpSetR_plot <- function(df, fill_column, total, height_ratio=1, geom_point_
     width_ratio=0.225,
     # Setting height_ratio=1 will cause the intersection matrix and the intersection size to have an equal height
     height_ratio=height_ratio,
-    # min_size=2,
     # Counts over bars & Total
     base_annotations=list(
       'Intersection size'=intersection_size(
@@ -154,10 +153,11 @@ make_UpSetR_plot <- function(df, fill_column, total, height_ratio=1, geom_point_
       + guides(fill=guide_legend(nrow=legNumRows, byrow=TRUE))
     ),
     #
+    min_size=min_size,
     set_sizes=(
       upset_set_size(
         geom=geom_bar(width=0.70, aes(fill=get(fill_column), x=group)),
-        # filter_intersections=TRUE
+        # filter_intersections=TRUE,
         position='right'
       )
       # Change y axis
@@ -190,8 +190,11 @@ make_UpSetR_plot <- function(df, fill_column, total, height_ratio=1, geom_point_
 #
 # Relation between Age and Educutaion Level of the participants
 #
-plot_label('Relation between Age and Education level of the participants')
 agg <- aggregate(x=country ~ timestamp + age + level_education, data=df, FUN=length)
+plot_label(paste0('Relation between Age and Education level of the participants', '\n',
+  format(round(
+    fisher.test(table(agg$'age', agg$'level_education'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'age', 'level_education', 'fill', 'top', 'participant\'s age', FALSE, legNumRows=10, label_in_bar_size=5)
 make_barplot(agg, 'age', 'level_education', 'stack', 'top', 'participant\'s age', FALSE, legNumRows=10, label_in_bar_size=5)
 remove(agg)
@@ -199,10 +202,13 @@ remove(agg)
 #
 # Relation between Primary QPL and Yes/No answer to if there are too many QPLs
 #
-plot_label('Relation between Primary QPL and \nYes/No answer to if there are too many QPLs')
 total <- merge(df, dfOpenQuestions, by="timestamp")
-agg <- aggregate(x=country ~ timestamp + primary_qpl + why_too_many_qpl_resp, data=total, FUN=length) 
+agg <- aggregate(x=country ~ timestamp + primary_qpl + why_too_many_qpl_resp, data=total, FUN=length)
 agg <- agg[agg$'why_too_many_qpl_resp' != '', ]
+plot_label(paste0('Relation between Primary QPL and', '\n', 'Yes/No answer to if there are too many QPLs', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'why_too_many_qpl_resp'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'why_too_many_qpl_resp', 'fill', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 make_barplot(agg, 'primary_qpl', 'why_too_many_qpl_resp', 'stack', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 remove(agg)
@@ -210,10 +216,13 @@ remove(agg)
 #
 # Relation between Primary QPL and Yes/No answer to if another QPL is needed
 #
-plot_label('Relation between Primary QPL \nand Yes/No answer to if another QPL is needed')
 total <- merge(df, dfOpenQuestions, by="timestamp")
-agg <- aggregate(x=country ~ timestamp + primary_qpl + why_need_another_qpl_resp, data=total, FUN=length) 
+agg <- aggregate(x=country ~ timestamp + primary_qpl + why_need_another_qpl_resp, data=total, FUN=length)
 agg <- agg[agg$'why_need_another_qpl_resp' != '', ]
+plot_label(paste0('Relation between Primary QPL \nand Yes/No answer to if another QPL is needed', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'why_need_another_qpl_resp'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'why_need_another_qpl_resp', 'fill', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 make_barplot(agg, 'primary_qpl', 'why_need_another_qpl_resp', 'stack', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 remove(agg)
@@ -221,7 +230,6 @@ remove(agg)
 #
 # Relation between Primary QPL and forum used
 #
-plot_label('Relation between Primary QPL and forum used')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + forum, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(forum, sep=';'))
@@ -230,6 +238,10 @@ agg <- agg[agg$'forum' != '', ]
 # Replace open-answers with 'Other'
 agg$'forum'[agg$'forum' %!in% c('Devtalk', 'Quantum Open Source Foundation', 'Slack', 'StackOverflow')] <- 'Other'
 agg$'forum' <- factor(agg$'forum', levels=c(stringr::str_sort(setdiff(unique(agg$'forum'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between Primary QPL and forum used', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'forum'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'forum', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=2, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'forum', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=2, label_in_bar_size=5)
 remove(agg)
@@ -238,8 +250,11 @@ remove(agg)
 #
 # Relation between primary QPL and knowledge of quantum physics
 #
-plot_label('Relation between primary QPL and knowledge of quantum physics')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + level_quantum_physics, data=df, FUN=length)
+plot_label(paste0('Relation between primary QPL and knowledge of quantum physics', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'level_quantum_physics'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'level_quantum_physics', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=1, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'level_quantum_physics', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=1, label_in_bar_size=5)
 remove(agg)
@@ -247,8 +262,11 @@ remove(agg)
 #
 # Relation between primary QPL and the education level of the participant
 #
-plot_label('Relation between primary QPL and the \neducation level of the participant')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + level_education, data=df, FUN=length)
+plot_label(paste0('Relation between primary QPL and the \neducation level of the participant', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'level_education'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'level_education', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=10, label_in_bar_size=4)
 make_barplot(agg, 'primary_qpl', 'level_education', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=10, label_in_bar_size=4)
 remove(agg)
@@ -256,8 +274,11 @@ remove(agg)
 #
 # Relation between primary QPL and the country of the participant
 #
-plot_label('Relation between primary QPL and the \ncountry of the participant')
 agg <- aggregate(x=age ~ timestamp + primary_qpl + country, data=df, FUN=length)
+plot_label(paste0('Relation between primary QPL and the \ncountry of the participant', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'country'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'country', 'fill', 'right', 'quantum programming languages', FALSE, legNumRows=10)
 make_barplot(agg, 'primary_qpl', 'country', 'stack', 'right', 'quantum programming languages', FALSE, legNumRows=10)
 remove(agg)
@@ -265,7 +286,6 @@ remove(agg)
 #
 # Relation between primary QPL and the participant major
 #
-plot_label('Relation between primary QPL and the participant major')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + major, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(major, sep=';'))
@@ -274,6 +294,10 @@ agg <- agg[agg$'major' != '', ]
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg$'major' <- factor(agg$'major', levels=c(stringr::str_sort(setdiff(unique(agg$'major'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between primary QPL and the participant major', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'major'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'major', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=3, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'major', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=3, label_in_bar_size=5)
 remove(agg)
@@ -282,13 +306,16 @@ remove(agg)
 #
 # Relation between primary QPL and how they learned
 #
-plot_label('Relation between primary QPL and how they learned')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + learned_qpl, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(learned_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'learned_qpl'[agg$'learned_qpl' %!in% c('Books', 'Language documentation', 'University', 'Online Course', 'Online Forums', 'Search Sites', 'Work')] <- 'Other'
 agg$'learned_qpl' <- factor(agg$'learned_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'learned_qpl'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between primary QPL and how they learned', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'learned_qpl'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'learned_qpl', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=2, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'learned_qpl', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=2, label_in_bar_size=5)
 remove(agg)
@@ -297,9 +324,12 @@ remove(agg)
 #
 # Relation between primary QPL and experience with QPLs
 #
-plot_label('Relation between primary QPL and experience with QPLs')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + years_coded_qpls, data=df, FUN=length)
 tab <- table(agg$years_coded_qpls, agg$primary_qpl)
+plot_label(paste0('Relation between primary QPL and experience with QPLs', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'years_coded_qpls'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'years_coded_qpls', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=3, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'years_coded_qpls', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=3, label_in_bar_size=5)
 remove(agg)
@@ -307,9 +337,12 @@ remove(agg)
 #
 # Relation between primary QPL and professional experience with QPLs
 #
-plot_label('Relation between primary QPL and professional experience with QPLs')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + years_coded_professionally_qpls, data=df, FUN=length)
 tab <- table(agg$years_coded_professionally_qpls, agg$primary_qpl)
+plot_label(paste0('Relation between primary QPL and professional experience with QPLs', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'years_coded_professionally_qpls'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'years_coded_professionally_qpls', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=4, label_in_bar_size=5)
 make_barplot(agg, 'primary_qpl', 'years_coded_professionally_qpls', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=4, label_in_bar_size=5)
 remove(agg)
@@ -317,7 +350,6 @@ remove(agg)
 #
 # Relation between QPL they would like to work or try in the near future and why
 #
-plot_label('Relation between QPL they would like to work or \ntry in the near future and why')
 agg <- aggregate(x=country ~ timestamp + qpl_future + why_like_try_qpl, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(qpl_future, sep=';'))
@@ -328,6 +360,10 @@ agg <- as.data.frame(agg %>% separate_rows(why_like_try_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'why_like_try_qpl'[agg$'why_like_try_qpl' %!in% c('Heard about the language', 'Is part of a course about the language', 'Read an article about the language', 'Widely used', 'Other features')] <- 'Other'
 agg$'why_like_try_qpl' <- factor(agg$'why_like_try_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'why_like_try_qpl'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between QPL they would like to work or \ntry in the near future and why', '\n',
+  format(round(
+    fisher.test(table(agg$'qpl_future', agg$'why_like_try_qpl'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'qpl_future', 'why_like_try_qpl', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=3, char_sep=' ', label_in_bar_size=5)
 make_barplot(agg, 'qpl_future', 'why_like_try_qpl', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=3, char_sep=' ', label_in_bar_size=5)
 
@@ -336,7 +372,7 @@ total <- length(unique(agg$timestamp))
 agg <- agg[, (names(agg) %in% c('timestamp', 'qpl_future', 'why_like_try_qpl'))]
 agg <- dcast(agg, ... ~ qpl_future, value.var='qpl_future', fun.aggregate=length)
 agg <- agg[ , which(colnames(agg) %!in% c('timestamp')) ]
-make_UpSetR_plot(agg, 'why_like_try_qpl', total, height_ratio=1.5, geom_point_size=2, intersection_y_size=14, legNumRows=2)
+make_UpSetR_plot(agg, 'why_like_try_qpl', total, height_ratio=1.5, geom_point_size=1.9, intersection_y_size=14, legNumRows=2, min_size=2)
 # FIXME 298 vs 208 ???
 
 remove(agg)
@@ -345,13 +381,16 @@ remove(total)
 #
 # Relation between primary QPL and for what they are used
 #
-plot_label('Relation between primary QPL and for what they are used')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + how_use_qpl, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(how_use_qpl, sep=';'))
 # Replace open-answers with 'Other'
 agg$'how_use_qpl'[agg$'how_use_qpl' %!in% c('Use it for work', 'Use it for research', 'Like to learn')] <- 'Other'
 agg$'how_use_qpl' <- factor(agg$'how_use_qpl', levels=c(stringr::str_sort(setdiff(unique(agg$'how_use_qpl'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between primary QPL and for what they are used', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'how_use_qpl'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'how_use_qpl', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=1, char_sep=' ')
 make_barplot(agg, 'primary_qpl', 'how_use_qpl', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=1, char_sep=' ')
 remove(agg)
@@ -359,10 +398,13 @@ remove(agg)
 #
 # Relation between primary QPL and if the participants test their quantum program
 #
-plot_label('Relation between primary QPL and if the participants test \ntheir quantum program')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + do_test, data=df, FUN=length)
 # Remove empty answers (not answered)
 agg <- agg[agg$'do_test' != '', ]
+plot_label(paste0('Relation between primary QPL and if the participants test \ntheir quantum program', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'do_test'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'do_test', 'fill', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 make_barplot(agg, 'primary_qpl', 'do_test', 'stack', 'top', 'quantum programming languages', FALSE, char_sep=' ', label_in_bar_size=7)
 remove(agg)
@@ -370,10 +412,13 @@ remove(agg)
 #
 # Relation between primary QPL and how the participants test
 #
-plot_label('Relation between primary QPL and how the participants test')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + how_test, data=df, FUN=length)
 # Remove empty answers (not answered)
 agg <- agg[agg$'how_test' != '', ]
+plot_label(paste0('Relation between primary QPL and how the participants test', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'how_test'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'how_test', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=1, char_sep=' ', label_in_bar_size=7)
 make_barplot(agg, 'primary_qpl', 'how_test', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=1, char_sep=' ', label_in_bar_size=7)
 remove(agg)
@@ -381,7 +426,6 @@ remove(agg)
 #
 # Relation between primary QPL and tool used for test
 #
-plot_label('Relation between Primary QPL and tool used for test')
 agg <- aggregate(x=country ~ timestamp + primary_qpl + tools_test, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(tools_test, sep=';'))
@@ -404,6 +448,10 @@ pretty_names_remove_parentheses <- function(string) {
   return(gsub(" \\(.*\\)$", '', string))
 }
 agg$'tools_test'[agg$'tools_test' != 'Other'] <- sapply(agg$'tools_test'[agg$'tools_test' != 'Other'], pretty_names_remove_parentheses)
+plot_label(paste0('Relation between Primary QPL and tool used for test', '\n',
+  format(round(
+    fisher.test(table(agg$'primary_qpl', agg$'tools_test'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'primary_qpl', 'tools_test', 'fill', 'top', 'quantum programming languages', FALSE, legNumRows=10, label_in_bar_size=4)
 make_barplot(agg, 'primary_qpl', 'tools_test', 'stack', 'top', 'quantum programming languages', FALSE, legNumRows=10, label_in_bar_size=4)
 remove(agg)
@@ -412,7 +460,6 @@ remove(agg)
 #
 # Relation between the work field of the participants and the reason they use the QPLs
 #
-plot_label('Relation between the work field of the participants and \nthe reason they use the QPLs')
 agg <- aggregate(x=country ~ timestamp + major + how_use_qpl, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(how_use_qpl, sep=';'))
@@ -426,6 +473,10 @@ agg$'how_use_qpl' <- factor(agg$'how_use_qpl', levels=c(stringr::str_sort(setdif
 # Replace open-answers with 'Other'
 agg$'major'[agg$'major' %!in% c('Art / Humanities', 'Computer Science', 'Economics', 'Software Engineering', 'Math', 'Other Engineering', 'Physics', 'Social Sciences')] <- 'Other'
 agg$'major' <- factor(agg$'major', levels=c(stringr::str_sort(setdiff(unique(agg$'major'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between the work field of the participants and \nthe reason they use the QPLs', '\n',
+  format(round(
+    fisher.test(table(agg$'major', agg$'how_use_qpl'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'major', 'how_use_qpl', 'fill', 'top', 'participant\'s major', FALSE, legNumRows=1)
 make_barplot(agg, 'major', 'how_use_qpl', 'stack', 'top', 'participant\'s major', FALSE, legNumRows=1)
 # FIXME 254 vs 208 ???
@@ -442,7 +493,6 @@ remove(total)
 #
 # Relation between the current job of the participants and the reason they are use the QPLs
 #
-plot_label('Relation between the current job of the participants and \nthe reason they are use the QPLs')
 agg <- aggregate(x=country ~ timestamp + job + how_use_qpl, data=df, FUN=length)
 # Convert dataframe from wide to long (row level), i.e., collapse a column with multiple values into multiple rows
 agg <- as.data.frame(agg %>% separate_rows(how_use_qpl, sep=';'))
@@ -459,6 +509,10 @@ agg$'job'[agg$'job' %!in% c('Academic researcher', 'Architect', 'Business Analys
   'Student', 'Systems Analyst', 'Team Lead', 'Technical Support', 'Technical Writer', 'Tester / QA Engineer',
   'UX / UI Designer')] <- 'Other'
 agg$'job' <- factor(agg$'job', levels=c(stringr::str_sort(setdiff(unique(agg$'job'), c('Other'))), 'Other'))
+plot_label(paste0('Relation between the current job of the participants and \nthe reason they are use the QPLs', '\n',
+  format(round(
+    fisher.test(table(agg$'job', agg$'how_use_qpl'), workspace=2000000, simulate.p.value=TRUE, B=1000000)$'p.value',
+  digit=5), nsmall=5)))
 make_barplot(agg, 'job', 'how_use_qpl', 'fill', 'top', 'participant\'s current job', TRUE, legNumRows=1, label_in_bar_size=4)
 make_barplot(agg, 'job', 'how_use_qpl', 'stack', 'top', 'participant\'s current job', TRUE, legNumRows=1, label_in_bar_size=4)
 # FIXME 430 vs 208 ???
